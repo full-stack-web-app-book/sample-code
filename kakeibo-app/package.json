@@ -1,0 +1,15 @@
+{
+  "name": "kakeibo-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}

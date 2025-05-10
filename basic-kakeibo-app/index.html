@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>シンプル家計簿アプリ</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>シンプル家計簿</h1>
+
+      <div class="summary-container">
+        <div class="summary-box income">
+          <h2>収入合計</h2>
+          <p id="total-income">0円</p>
+        </div>
+        <div class="summary-box expense">
+          <h2>支出合計</h2>
+          <p id="total-expense">0円</p>
+        </div>
+        <div class="summary-box balance">
+          <h2>残高</h2>
+          <p id="balance">0円</p>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <a href="input.html" class="add-button">収支を登録する</a>
+      </div>
+
+      <div class="history-container">
+        <div class="history-section">
+          <h2>収入履歴</h2>
+          <div id="income-history" class="history-list">
+            <!-- 収入履歴がここに表示されます -->
+          </div>
+        </div>
+        <div class="history-section">
+          <h2>支出履歴</h2>
+          <div id="expense-history" class="history-list">
+            <!-- 支出履歴がここに表示されます -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>収支の登録 - シンプル家計簿アプリ</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>収支の登録</h1>
+
+      <form id="transaction-form">
+        <div class="form-group">
+          <label>種類：</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="type" value="income" checked /> 収入
+            </label>
+            <label>
+              <input type="radio" name="type" value="expense" /> 支出
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="item">項目：</label>
+          <input
+            type="text"
+            id="item"
+            name="item"
+            placeholder="例：給料、食費、交通費など"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="amount">金額（円）：</label>
+          <input
+            type="number"
+            id="amount"
+            name="amount"
+            min="1"
+            placeholder="例：10000"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="date">日付：</label>
+          <input type="date" id="date" name="date" required />
+        </div>
+
+        <div class="button-container">
+          <button type="submit" id="submit-btn" class="submit-button">
+            登録する
+          </button>
+          <a href="index.html" class="cancel-button">キャンセル</a>
+        </div>
+      </form>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

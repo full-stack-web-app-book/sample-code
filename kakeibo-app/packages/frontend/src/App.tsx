@@ -1,8 +1,17 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import GlobalStyle from "./styles/GlobalStyle";
+import HomePage from "./pages/HomePage";
+import InputPage from "./pages/InputPage";
+
 function App() {
   return (
-    <>
-      <h1>シンプル家計簿</h1>
-    </>
+    <Router>
+      <GlobalStyle />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/input" element={<InputPage />} />
+      </Routes>
+    </Router>
   );
 }
 

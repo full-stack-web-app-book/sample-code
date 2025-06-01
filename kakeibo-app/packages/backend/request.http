@@ -15,3 +15,13 @@ Content-Type: application/json
 
 ###
 GET http://localhost:4010/transactions/expense
+
+###
+POST http://localhost:4010/transactions/expense
+Content-Type: application/json
+
+{
+  "item": "食費",
+  "amount": 1500,
+  "date": "2025-06-01"
+}

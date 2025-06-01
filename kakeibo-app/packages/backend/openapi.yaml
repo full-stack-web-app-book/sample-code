@@ -88,6 +88,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    post:
+      summary: 支出情報の登録
+      description: 新しい支出情報を登録します
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExpenseTransactionInput"
+      responses:
+        "201":
+          description: 支出情報の登録成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+        "400":
+          description: 不正なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
 components:
   schemas:
@@ -214,7 +242,7 @@ components:
           type: string
           description: エラーメッセージ
           example: "Internal Server Error"
-          
+
     IncomeTransactionInput:
       type: object
       required:
@@ -236,3 +264,25 @@ components:
           format: date
           description: 取引日付
           example: "2025-05-25"
+
+    ExpenseTransactionInput:
+      type: object
+      required:
+        - item
+        - amount
+        - date
+      properties:
+        item:
+          type: string
+          description: 支出項目名
+          example: 食費
+        amount:
+          type: number
+          description: 金額（正の数）
+          minimum: 1
+          example: 15000
+        date:
+          type: string
+          format: date
+          description: 取引日付
+          example: "2025-05-26"

@@ -80,12 +80,27 @@ export const useTransactions = () => {
           setIncomeList(updatedIncomeList);
         }
       } else if (transaction.type === "expense" && expenseList) {
-        // 支出の場合はまだAPIが実装されていないので、従来の方法で処理
-        const newTransaction = {
-          ...transaction,
-          id: Date.now(),
-        };
+        // 支出追加APIを呼び出し
+        const response = await fetch("/api/transactions/expense", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            item: transaction.item,
+            amount: transaction.amount,
+            date: transaction.date,
+          }),
+        });
 
+        if (!response.ok) {
+          throw new Error("支出の追加に失敗しました");
+        }
+
+        // APIから返却された新しい取引データを取得
+        const newTransaction = (await response.json()) as Transaction;
+
+        // 支出リストの更新
         const updatedExpenseList = {
           ...expenseList,
           transactions: [newTransaction, ...expenseList.transactions],

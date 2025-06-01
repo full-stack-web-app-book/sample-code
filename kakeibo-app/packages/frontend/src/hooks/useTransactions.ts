@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 import type { Transaction } from "../utils/transactionUtils";
 import { getTransactions, saveTransaction } from "../utils/transactionUtils";
+import { useFinancialSummary } from "./useFinancialSummary";
 
 export const useTransactions = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [totalIncome, setTotalIncome] = useState<number>(0);
-  const [totalExpense, setTotalExpense] = useState<number>(0);
-  const [balance, setBalance] = useState<number>(0);
+  const {
+    data: financialSummary,
+    isLoading,
+    refetch: refetchSummary,
+  } = useFinancialSummary();
 
   useEffect(() => {
-    // ローカルストレージからデータを取得
+    // ローカルストレージからトランザクションデータを取得
     const loadedTransactions = getTransactions();
 
     // 日付でソート（新しい順）
@@ -18,26 +21,7 @@ export const useTransactions = () => {
     );
 
     setTransactions(loadedTransactions);
-    calculateSummary(loadedTransactions);
   }, []);
-
-  // 収支サマリーを計算
-  const calculateSummary = (data: Transaction[]) => {
-    let income = 0;
-    let expense = 0;
-
-    data.forEach((transaction) => {
-      if (transaction.type === "income") {
-        income += transaction.amount;
-      } else {
-        expense += transaction.amount;
-      }
-    });
-
-    setTotalIncome(income);
-    setTotalExpense(expense);
-    setBalance(income - expense);
-  };
 
   // 新しい取引を追加
   const addTransaction = (transaction: Omit<Transaction, "id">) => {
@@ -52,14 +36,17 @@ export const useTransactions = () => {
     // 状態を更新
     const updatedTransactions = [newTransaction, ...transactions];
     setTransactions(updatedTransactions);
-    calculateSummary(updatedTransactions);
+
+    // 新しい取引追加後にAPIから最新のサマリーを取得
+    refetchSummary();
   };
 
   return {
     transactions,
-    totalIncome,
-    totalExpense,
-    balance,
+    totalIncome: financialSummary.totalIncome,
+    totalExpense: financialSummary.totalExpense,
+    balance: financialSummary.balance,
     addTransaction,
+    isLoading,
   };
 };

@@ -5,13 +5,23 @@ interface BalanceSummaryProps {
   totalIncome: number;
   totalExpense: number;
   balance: number;
+  isLoading?: boolean;
 }
 
 const BalanceSummary: React.FC<BalanceSummaryProps> = ({
   totalIncome,
   totalExpense,
   balance,
+  isLoading = false,
 }) => {
+  if (isLoading) {
+    return (
+      <div className="summary-container">
+        <div className="loading-indicator">データを読み込み中...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="summary-container">
       <div className="summary-box income">

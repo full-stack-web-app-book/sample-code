@@ -1,5 +1,4 @@
 import React from "react";
-import { SummaryContainer, SummaryBox } from "../styles/StyledComponents";
 import { formatAmount } from "../utils/transactionUtils";
 
 interface BalanceSummaryProps {
@@ -14,20 +13,20 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
   balance,
 }) => {
   return (
-    <SummaryContainer>
-      <SummaryBox type="income">
+    <div className="summary-container">
+      <div className="summary-box income">
         <h2>収入合計</h2>
         <p>{formatAmount(totalIncome)}</p>
-      </SummaryBox>
-      <SummaryBox type="expense">
+      </div>
+      <div className="summary-box expense">
         <h2>支出合計</h2>
         <p>{formatAmount(totalExpense)}</p>
-      </SummaryBox>
-      <SummaryBox type="balance">
+      </div>
+      <div className="summary-box balance">
         <h2>残高</h2>
-        <p>{formatAmount(balance)}</p>
-      </SummaryBox>
-    </SummaryContainer>
+        <p className={balance < 0 ? "negative" : ""}>{formatAmount(balance)}</p>
+      </div>
+    </div>
   );
 };
 

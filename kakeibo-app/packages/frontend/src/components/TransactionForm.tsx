@@ -1,16 +1,5 @@
-import React, { useState } from "react";
-import type { FormEvent } from "react";
+import React, { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Container,
-  FormGroup,
-  Label,
-  Input,
-  RadioGroup,
-  ButtonContainer,
-  AddButton,
-  CancelButton,
-} from "../styles/StyledComponents";
 import type { Transaction } from "../utils/transactionUtils";
 
 interface TransactionFormProps {
@@ -50,13 +39,13 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   };
 
   return (
-    <Container>
+    <div className="container">
       <h1>収支の登録</h1>
 
       <form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label>種類：</Label>
-          <RadioGroup>
+        <div className="form-group">
+          <label>種類：</label>
+          <div className="radio-group">
             <label>
               <input
                 type="radio"
@@ -75,12 +64,12 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
               />
               支出
             </label>
-          </RadioGroup>
-        </FormGroup>
+          </div>
+        </div>
 
-        <FormGroup>
-          <Label htmlFor="item">項目：</Label>
-          <Input
+        <div className="form-group">
+          <label htmlFor="item">項目：</label>
+          <input
             type="text"
             id="item"
             value={item}
@@ -88,11 +77,11 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
             placeholder="例：給料、食費、交通費など"
             required
           />
-        </FormGroup>
+        </div>
 
-        <FormGroup>
-          <Label htmlFor="amount">金額（円）：</Label>
-          <Input
+        <div className="form-group">
+          <label htmlFor="amount">金額（円）：</label>
+          <input
             type="number"
             id="amount"
             value={amount}
@@ -101,27 +90,33 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
             placeholder="例：10000"
             required
           />
-        </FormGroup>
+        </div>
 
-        <FormGroup>
-          <Label htmlFor="date">日付：</Label>
-          <Input
+        <div className="form-group">
+          <label htmlFor="date">日付：</label>
+          <input
             type="date"
             id="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
           />
-        </FormGroup>
+        </div>
 
-        <ButtonContainer>
-          <AddButton type="submit">登録する</AddButton>
-          <CancelButton type="button" onClick={() => navigate("/")}>
+        <div className="button-container">
+          <button type="submit" className="add-button">
+            登録する
+          </button>
+          <button
+            type="button"
+            className="cancel-button"
+            onClick={() => navigate("/")}
+          >
             キャンセル
-          </CancelButton>
-        </ButtonContainer>
+          </button>
+        </div>
       </form>
-    </Container>
+    </div>
   );
 };
 

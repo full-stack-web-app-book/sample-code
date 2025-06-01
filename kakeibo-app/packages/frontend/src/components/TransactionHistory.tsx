@@ -1,15 +1,10 @@
+// filepath: /Users/kz-takasaki/work/github/web-app-study/kakeibo-app/packages/frontend/src/components/TransactionHistory.tsx
 import React from "react";
 import {
-  HistoryContainer,
-  HistorySection,
-  HistoryList,
-  HistoryItem,
-  HistoryDate,
-  IncomeAmount,
-  ExpenseAmount,
-} from "../styles/StyledComponents";
-import type { Transaction } from "../utils/transactionUtils";
-import { formatDate, formatAmount } from "../utils/transactionUtils";
+  type Transaction,
+  formatDate,
+  formatAmount,
+} from "../utils/transactionUtils";
 
 interface TransactionHistoryProps {
   transactions: Transaction[];
@@ -27,47 +22,53 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
   );
 
   return (
-    <HistoryContainer>
-      <HistorySection>
+    <div className="history-container">
+      <div className="history-section">
         <h2>収入履歴</h2>
-        <HistoryList>
+        <div className="history-list">
           {incomeTransactions.length > 0 ? (
             incomeTransactions.map((transaction) => (
-              <HistoryItem key={transaction.id}>
+              <div className="history-item" key={transaction.id}>
                 <div>
                   <div>{transaction.item}</div>
-                  <HistoryDate>{formatDate(transaction.date)}</HistoryDate>
+                  <div className="history-date">
+                    {formatDate(transaction.date)}
+                  </div>
                 </div>
-                <IncomeAmount>{formatAmount(transaction.amount)}</IncomeAmount>
-              </HistoryItem>
+                <div className="income-amount">
+                  {formatAmount(transaction.amount)}
+                </div>
+              </div>
             ))
           ) : (
             <p>収入の記録がありません</p>
           )}
-        </HistoryList>
-      </HistorySection>
+        </div>
+      </div>
 
-      <HistorySection>
+      <div className="history-section">
         <h2>支出履歴</h2>
-        <HistoryList>
+        <div className="history-list">
           {expenseTransactions.length > 0 ? (
             expenseTransactions.map((transaction) => (
-              <HistoryItem key={transaction.id}>
+              <div className="history-item" key={transaction.id}>
                 <div>
                   <div>{transaction.item}</div>
-                  <HistoryDate>{formatDate(transaction.date)}</HistoryDate>
+                  <div className="history-date">
+                    {formatDate(transaction.date)}
+                  </div>
                 </div>
-                <ExpenseAmount>
+                <div className="expense-amount">
                   {formatAmount(transaction.amount)}
-                </ExpenseAmount>
-              </HistoryItem>
+                </div>
+              </div>
             ))
           ) : (
             <p>支出の記録がありません</p>
           )}
-        </HistoryList>
-      </HistorySection>
-    </HistoryContainer>
+        </div>
+      </div>
+    </div>
   );
 };
 

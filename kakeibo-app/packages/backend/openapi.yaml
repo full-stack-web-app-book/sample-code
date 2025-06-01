@@ -122,7 +122,7 @@ components:
         totalCount:
           type: integer
           description: 総取引数
-          example: 42
+          example: 2
         totalAmount:
           type: number
           description: 収入の合計金額

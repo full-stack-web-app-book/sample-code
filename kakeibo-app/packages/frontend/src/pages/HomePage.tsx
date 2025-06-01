@@ -15,14 +15,6 @@ const HomePage: React.FC = () => {
   const { data: financialSummary, isLoading: isFinancialLoading } =
     useFinancialSummary();
 
-  // トランザクションデータを準備
-  const allTransactions = React.useMemo(() => {
-    if (!incomeList || !expenseList) return [];
-    return [...incomeList.transactions, ...expenseList.transactions].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
-  }, [incomeList, expenseList]);
-
   const isLoading = isTransactionsLoading || isFinancialLoading;
 
   return (
@@ -44,7 +36,10 @@ const HomePage: React.FC = () => {
 
       {error && <p className="error-message">エラー: {error.message}</p>}
 
-      <TransactionHistory transactions={allTransactions} />
+      <TransactionHistory
+        incomeTransactions={incomeList?.transactions || []}
+        expenseTransactions={expenseList?.transactions || []}
+      />
     </div>
   );
 };

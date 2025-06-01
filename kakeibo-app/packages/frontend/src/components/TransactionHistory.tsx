@@ -7,20 +7,14 @@ import {
 } from "../utils/transactionUtils";
 
 interface TransactionHistoryProps {
-  transactions: Transaction[];
+  incomeTransactions: Transaction[];
+  expenseTransactions: Transaction[];
 }
 
 const TransactionHistory: React.FC<TransactionHistoryProps> = ({
-  transactions,
+  incomeTransactions,
+  expenseTransactions,
 }) => {
-  // 収入と支出を分ける
-  const incomeTransactions = transactions.filter(
-    (transaction) => transaction.type === "income"
-  );
-  const expenseTransactions = transactions.filter(
-    (transaction) => transaction.type === "expense"
-  );
-
   return (
     <div className="history-container">
       <div className="history-section">

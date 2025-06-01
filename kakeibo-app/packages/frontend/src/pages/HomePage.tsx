@@ -4,19 +4,20 @@ import { Link } from "react-router-dom";
 import BalanceSummary from "../components/BalanceSummary";
 import TransactionHistory from "../components/TransactionHistory";
 import { useTransactions } from "../hooks/useTransactions";
+import { useFinancialSummary } from "../hooks/useFinancialSummary";
 
 const HomePage: React.FC = () => {
-  const { transactions, totalIncome, totalExpense, balance, isLoading } =
-    useTransactions();
+  const { transactions } = useTransactions();
+  const { data: financialSummary, isLoading } = useFinancialSummary();
 
   return (
     <div className="container">
       <h1>シンプル家計簿</h1>
 
       <BalanceSummary
-        totalIncome={totalIncome}
-        totalExpense={totalExpense}
-        balance={balance}
+        totalIncome={financialSummary.totalIncome}
+        totalExpense={financialSummary.totalExpense}
+        balance={financialSummary.balance}
         isLoading={isLoading}
       />
 

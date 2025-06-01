@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
 // 財務サマリーの型定義
-interface FinancialSummary {
+export interface FinancialSummary {
   totalIncome: number;
   totalExpense: number;
   balance: number;
@@ -23,7 +23,7 @@ export const useFinancialSummary = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:4010/summary");
+      const response = await fetch("/api/summary");
       if (!response.ok) {
         throw new Error("サーバーからデータの取得に失敗しました");
       }
@@ -46,7 +46,8 @@ export const useFinancialSummary = () => {
   // コンポーネントのマウント時にデータを取得
   useEffect(() => {
     fetchSummary();
-  }, [fetchSummary]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     data,

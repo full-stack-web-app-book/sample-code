@@ -1,15 +1,9 @@
 import { useState, useEffect } from "react";
 import type { Transaction } from "../utils/transactionUtils";
 import { getTransactions, saveTransaction } from "../utils/transactionUtils";
-import { useFinancialSummary } from "./useFinancialSummary";
 
 export const useTransactions = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const {
-    data: financialSummary,
-    isLoading,
-    refetch: refetchSummary,
-  } = useFinancialSummary();
 
   useEffect(() => {
     // ローカルストレージからトランザクションデータを取得
@@ -36,17 +30,10 @@ export const useTransactions = () => {
     // 状態を更新
     const updatedTransactions = [newTransaction, ...transactions];
     setTransactions(updatedTransactions);
-
-    // 新しい取引追加後にAPIから最新のサマリーを取得
-    refetchSummary();
   };
 
   return {
     transactions,
-    totalIncome: financialSummary.totalIncome,
-    totalExpense: financialSummary.totalExpense,
-    balance: financialSummary.balance,
     addTransaction,
-    isLoading,
   };
 };

@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: 家計簿アプリ API
+  description: 収入合計、支出合計、残高を管理するための API
+  version: 1.0.0
+servers:
+  - url: /api
+    description: 開発サーバー
+paths:
+  /summary:
+    get:
+      summary: 財務サマリーの取得
+      description: 収入合計、支出合計、残高を取得します
+      responses:
+        "200":
+          description: 正常にデータを取得
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FinancialSummary"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    FinancialSummary:
+      type: object
+      required:
+        - totalIncome
+        - totalExpense
+        - balance
+      properties:
+        totalIncome:
+          type: number
+          description: 収入合計
+          example: 300000
+        totalExpense:
+          type: number
+          description: 支出合計
+          example: 25000
+        balance:
+          type: number
+          description: 残高（収入合計 - 支出合計）
+          example: 275000
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: エラーメッセージ
+          example: "Internal Server Error"

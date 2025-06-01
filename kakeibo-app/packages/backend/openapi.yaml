@@ -4,7 +4,7 @@ info:
   description: 収入合計、支出合計、残高を管理するための API
   version: 1.0.0
 servers:
-  - url: /api
+  - url: /
     description: 開発サーバー
 paths:
   /summary:

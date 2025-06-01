@@ -1,4 +1,5 @@
 GET http://localhost:4010/summary
-
 ###
 GET http://localhost:4010/transactions/income
+###
+GET http://localhost:4010/transactions/expense

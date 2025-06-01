@@ -43,6 +43,24 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /transactions/expense:
+    get:
+      summary: 支出履歴一覧の取得
+      description: すべての支出履歴の一覧を取得します
+      responses:
+        "200":
+          description: 正常にデータを取得
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpenseTransactionList"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   schemas:
     FinancialSummary:
@@ -127,6 +145,37 @@ components:
           type: number
           description: 収入の合計金額
           example: 300000
+
+    ExpenseTransactionList:
+      type: object
+      required:
+        - transactions
+        - totalCount
+      properties:
+        transactions:
+          type: array
+          description: 支出取引リスト
+          items:
+            $ref: "#/components/schemas/Transaction"
+          example:
+            - id: 1654321234569
+              type: expense
+              item: 食費
+              amount: 15000
+              date: "2025-05-26"
+            - id: 1654321234570
+              type: expense
+              item: 交通費
+              amount: 10000
+              date: "2025-05-22"
+        totalCount:
+          type: integer
+          description: 総取引数
+          example: 2
+        totalAmount:
+          type: number
+          description: 支出の合計金額
+          example: 25000
 
     Error:
       type: object

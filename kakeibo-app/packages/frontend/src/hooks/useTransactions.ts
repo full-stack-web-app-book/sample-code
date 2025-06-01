@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import type { Transaction } from "../utils/transactionUtils";
-import { saveTransaction } from "../utils/transactionUtils";
 
 interface TransactionList {
   transactions: Transaction[];
@@ -48,31 +47,60 @@ export const useTransactions = () => {
 
   // 新しい取引を追加
   const addTransaction = async (transaction: Omit<Transaction, "id">) => {
-    const newTransaction = {
-      ...transaction,
-      id: Date.now(),
-    };
+    try {
+      if (transaction.type === "income") {
+        // 収入追加APIを呼び出し
+        const response = await fetch("/api/transactions/income", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            item: transaction.item,
+            amount: transaction.amount,
+            date: transaction.date,
+          }),
+        });
 
-    // ローカルストレージに保存（将来的にはAPIでの保存に置き換え予定）
-    saveTransaction(newTransaction);
+        if (!response.ok) {
+          throw new Error("収入の追加に失敗しました");
+        }
 
-    // 収入または支出リストの更新
-    if (transaction.type === "income" && incomeList) {
-      const updatedIncomeList = {
-        ...incomeList,
-        transactions: [newTransaction, ...incomeList.transactions],
-        totalCount: incomeList.totalCount + 1,
-        totalAmount: incomeList.totalAmount + transaction.amount,
-      };
-      setIncomeList(updatedIncomeList);
-    } else if (transaction.type === "expense" && expenseList) {
-      const updatedExpenseList = {
-        ...expenseList,
-        transactions: [newTransaction, ...expenseList.transactions],
-        totalCount: expenseList.totalCount + 1,
-        totalAmount: expenseList.totalAmount + transaction.amount,
-      };
-      setExpenseList(updatedExpenseList);
+        // APIから返却された新しい取引データを取得
+        const newTransaction = (await response.json()) as Transaction;
+
+        // 収入リストの更新
+        if (incomeList) {
+          const updatedIncomeList = {
+            ...incomeList,
+            transactions: [newTransaction, ...incomeList.transactions],
+            totalCount: incomeList.totalCount + 1,
+            totalAmount: incomeList.totalAmount + transaction.amount,
+          };
+          setIncomeList(updatedIncomeList);
+        }
+      } else if (transaction.type === "expense" && expenseList) {
+        // 支出の場合はまだAPIが実装されていないので、従来の方法で処理
+        const newTransaction = {
+          ...transaction,
+          id: Date.now(),
+        };
+
+        const updatedExpenseList = {
+          ...expenseList,
+          transactions: [newTransaction, ...expenseList.transactions],
+          totalCount: expenseList.totalCount + 1,
+          totalAmount: expenseList.totalAmount + transaction.amount,
+        };
+        setExpenseList(updatedExpenseList);
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err
+          : new Error("取引の追加中にエラーが発生しました")
+      );
+      throw err; // エラーを上位コンポーネントに伝播させる
     }
   };
 

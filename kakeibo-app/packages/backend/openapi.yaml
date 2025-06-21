@@ -260,7 +260,7 @@ components:
         message:
           type: string
           description: エラーメッセージ
-          example: "Internal Server Error"
+          example: "エラーが発生しました"
 
     TransactionInput:
       type: object

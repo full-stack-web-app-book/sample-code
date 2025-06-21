@@ -64,7 +64,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/IncomeTransactionInput"
+              $ref: "#/components/schemas/TransactionInput"
+            example:
+              type: income
+              item: 給料
+              amount: 250000
+              date: "2025-05-25"
       responses:
         "201":
           description: 収入情報の登録成功
@@ -72,6 +77,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Transaction"
+              example:
+                id: 1654321234567
+                type: income
+                item: 給料
+                amount: 250000
+                date: "2025-05-25"
         "400":
           description: 不正なリクエスト
           content:
@@ -124,7 +135,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ExpenseTransactionInput"
+              $ref: "#/components/schemas/TransactionInput"
+            example:
+              type: expense
+              item: 食費
+              amount: 15000
+              date: "2025-05-26"
       responses:
         "201":
           description: 支出情報の登録成功
@@ -132,6 +148,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Transaction"
+              example:
+                id: 1654321234569
+                type: expense
+                item: 食費
+                amount: 15000
+                date: "2025-05-26"
         "400":
           description: 不正なリクエスト
           content:
@@ -240,16 +262,22 @@ components:
           description: エラーメッセージ
           example: "Internal Server Error"
 
-    IncomeTransactionInput:
+    TransactionInput:
       type: object
       required:
+        - type
         - item
         - amount
         - date
       properties:
+        type:
+          type: string
+          enum: [income, expense]
+          description: 取引種別（収入/支出）
+          example: income
         item:
           type: string
-          description: 収入項目名
+          description: 項目名
           example: 給料
         amount:
           type: number
@@ -261,25 +289,3 @@ components:
           format: date
           description: 取引日付
           example: "2025-05-25"
-
-    ExpenseTransactionInput:
-      type: object
-      required:
-        - item
-        - amount
-        - date
-      properties:
-        item:
-          type: string
-          description: 支出項目名
-          example: 食費
-        amount:
-          type: number
-          description: 金額（正の数）
-          minimum: 1
-          example: 15000
-        date:
-          type: string
-          format: date
-          description: 取引日付
-          example: "2025-05-26"

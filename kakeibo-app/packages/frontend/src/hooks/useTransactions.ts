@@ -80,7 +80,7 @@ export const useTransactions = () => {
         if (!response.ok) {
           throw new Error("収入の追加に失敗しました");
         }
-      } else if (transaction.type === "expense" && expenseList) {
+      } else if (transaction.type === "expense") {
         // 支出追加APIを呼び出し
         const response = await fetch("/api/transactions/expense", {
           method: "POST",

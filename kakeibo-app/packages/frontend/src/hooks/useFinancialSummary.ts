@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 // 財務サマリーの型定義
 export interface FinancialSummary {

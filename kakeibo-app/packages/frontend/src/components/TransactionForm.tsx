@@ -1,6 +1,6 @@
 import React, { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import type { Transaction } from "../utils/transactionUtils";
+import { formatTodayDate, type Transaction } from "../utils/transactionUtils";
 
 interface TransactionFormProps {
   onAddTransaction: (transaction: Omit<Transaction, "id">) => void;
@@ -14,15 +14,6 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(formatTodayDate());
-
-  // 今日の日付をYYYY-MM-DD形式で取得
-  function formatTodayDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const day = String(today.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

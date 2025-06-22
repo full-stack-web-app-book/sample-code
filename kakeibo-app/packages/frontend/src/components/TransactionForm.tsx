@@ -10,7 +10,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   onAddTransaction,
 }) => {
   const navigate = useNavigate();
-  const [type, setType] = useState<"income" | "expense">("income");
+  const [type, setType] = useState<"income" | "expense">("expense");
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(formatTodayDate());
@@ -40,7 +40,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
 
   return (
     <div className="container">
-      <h1>収支の登録</h1>
+      <h1>取引の登録</h1>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -49,20 +49,20 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
             <label>
               <input
                 type="radio"
-                value="income"
-                checked={type === "income"}
-                onChange={() => setType("income")}
-              />
-              収入
-            </label>
-            <label>
-              <input
-                type="radio"
                 value="expense"
                 checked={type === "expense"}
                 onChange={() => setType("expense")}
               />
               支出
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="income"
+                checked={type === "income"}
+                onChange={() => setType("income")}
+              />
+              収入
             </label>
           </div>
         </div>

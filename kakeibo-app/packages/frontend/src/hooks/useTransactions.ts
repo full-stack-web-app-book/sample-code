@@ -65,20 +65,6 @@ export const useTransactions = () => {
         if (!response.ok) {
           throw new Error("収入の追加に失敗しました");
         }
-
-        // APIから返却された新しい取引データを取得
-        const newTransaction = (await response.json()) as Transaction;
-
-        // 収入リストの更新
-        if (incomeList) {
-          const updatedIncomeList = {
-            ...incomeList,
-            transactions: [newTransaction, ...incomeList.transactions],
-            totalCount: incomeList.totalCount + 1,
-            totalAmount: incomeList.totalAmount + transaction.amount,
-          };
-          setIncomeList(updatedIncomeList);
-        }
       } else if (transaction.type === "expense" && expenseList) {
         // 支出追加APIを呼び出し
         const response = await fetch("/api/transactions/expense", {
@@ -96,18 +82,6 @@ export const useTransactions = () => {
         if (!response.ok) {
           throw new Error("支出の追加に失敗しました");
         }
-
-        // APIから返却された新しい取引データを取得
-        const newTransaction = (await response.json()) as Transaction;
-
-        // 支出リストの更新
-        const updatedExpenseList = {
-          ...expenseList,
-          transactions: [newTransaction, ...expenseList.transactions],
-          totalCount: expenseList.totalCount + 1,
-          totalAmount: expenseList.totalAmount + transaction.amount,
-        };
-        setExpenseList(updatedExpenseList);
       }
     } catch (err) {
       setError(

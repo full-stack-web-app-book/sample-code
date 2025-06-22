@@ -1,28 +1,54 @@
-// filepath: /Users/kz-takasaki/work/github/web-app-study/kakeibo-app/packages/frontend/src/pages/HomePage.tsx
-import React from 'react';
-import { Link } from 'react-router-dom';
-import BalanceSummary from '../components/BalanceSummary';
-import TransactionHistory from '../components/TransactionHistory';
-import { useTransactions } from '../hooks/useTransactions';
+import React from "react";
+import { Link } from "react-router-dom";
+import BalanceSummary from "../components/BalanceSummary";
+import TransactionHistory from "../components/TransactionHistory";
+import { useTransactions } from "../hooks/useTransactions";
+import { useFinancialSummary } from "../hooks/useFinancialSummary";
 
 const HomePage: React.FC = () => {
-  const { transactions, totalIncome, totalExpense, balance } = useTransactions();
+  const {
+    data: financialSummary,
+    isLoading: isFinancialLoading,
+    error: financialError,
+  } = useFinancialSummary();
+
+  const {
+    incomeList,
+    expenseList,
+    isLoading: isTransactionsLoading,
+    error: transactionsError,
+  } = useTransactions();
+
+  const isLoading = isTransactionsLoading || isFinancialLoading;
 
   return (
     <div className="container">
       <h1>シンプル家計簿</h1>
-      
-      <BalanceSummary 
-        totalIncome={totalIncome} 
-        totalExpense={totalExpense} 
-        balance={balance} 
+
+      {financialError && (
+        <div className="error-message">{financialError.message}</div>
+      )}
+      {transactionsError && (
+        <div className="error-message">{transactionsError.message}</div>
+      )}
+
+      <BalanceSummary
+        totalIncome={financialSummary?.totalIncome || 0}
+        totalExpense={financialSummary?.totalExpense || 0}
+        balance={financialSummary?.balance || 0}
+        isLoading={isLoading}
       />
-      
+
       <div className="button-container">
-        <Link to="/input" className="add-button">収支を登録する</Link>
+        <Link to="/input" className="add-button">
+          収支を登録する
+        </Link>
       </div>
-      
-      <TransactionHistory transactions={transactions} />
+
+      <TransactionHistory
+        incomeTransactions={incomeList?.transactions || []}
+        expenseTransactions={expenseList?.transactions || []}
+      />
     </div>
   );
 };

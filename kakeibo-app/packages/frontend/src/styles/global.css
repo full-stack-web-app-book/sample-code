@@ -102,6 +102,22 @@ h2 {
   color: #3498db;
 }
 
+/* エラーメッセージのスタイル */
+.error-message {
+  color: #e74c3c;
+  background-color: #fadbd8;
+  border: 1px solid #e74c3c;
+  border-radius: 4px;
+  padding: 10px 15px;
+  margin: 10px 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.error-message.hidden {
+  display: none;
+}
+
 .summary-box p {
   font-size: 1.5em;
   font-weight: bold;
@@ -206,4 +222,29 @@ input[type="date"] {
 
 .radio-group input {
   margin-right: 5px;
+}
+
+/* ローディングインジケーター */
+.loading-indicator {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2em;
+  color: #555;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
 }

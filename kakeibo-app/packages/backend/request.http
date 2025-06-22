@@ -1,0 +1,27 @@
+GET http://localhost:4010/summary
+
+###
+GET http://localhost:4010/transactions/income
+
+###
+POST http://localhost:4010/transactions/income
+Content-Type: application/json
+
+{
+  "item": "給料",
+  "amount": 250000,
+  "date": "2025-05-25"
+}
+
+###
+GET http://localhost:4010/transactions/expense
+
+###
+POST http://localhost:4010/transactions/expense
+Content-Type: application/json
+
+{
+  "item": "食費",
+  "amount": 1500,
+  "date": "2025-06-01"
+}

@@ -1,0 +1,283 @@
+openapi: 3.0.0
+info:
+  title: 家計簿アプリ API
+  description: 収入合計、支出合計、残高を管理するための API
+  version: 1.0.0
+servers:
+  - url: /
+    description: 開発サーバー
+paths:
+  /summary:
+    get:
+      summary: 財務サマリーの取得
+      description: 収入合計、支出合計、残高を取得します
+      responses:
+        "200":
+          description: 正常にデータを取得
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FinancialSummary"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /transactions/income:
+    get:
+      summary: 収入履歴一覧の取得
+      description: すべての収入履歴の一覧を取得します
+      responses:
+        "200":
+          description: 正常にデータを取得
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionList"
+              example:
+                transactions:
+                  - id: 1654321234567
+                    type: income
+                    item: 給料
+                    amount: 250000
+                    date: "2025-05-25"
+                  - id: 1654321234568
+                    type: income
+                    item: 副業収入
+                    amount: 50000
+                    date: "2025-05-20"
+                totalCount: 2
+                totalAmount: 300000
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: 収入情報の登録
+      description: 新しい収入情報を登録します
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionInput"
+            example:
+              item: 給料
+              amount: 250000
+              date: "2025-05-25"
+      responses:
+        "201":
+          description: 収入情報の登録成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+              example:
+                id: 1654321234567
+                type: income
+                item: 給料
+                amount: 250000
+                date: "2025-05-25"
+        "400":
+          description: 不正なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /transactions/expense:
+    get:
+      summary: 支出履歴一覧の取得
+      description: すべての支出履歴の一覧を取得します
+      responses:
+        "200":
+          description: 正常にデータを取得
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionList"
+              example:
+                transactions:
+                  - id: 1654321234569
+                    type: expense
+                    item: 食費
+                    amount: 15000
+                    date: "2025-05-26"
+                  - id: 1654321234570
+                    type: expense
+                    item: 光熱費
+                    amount: 10000
+                    date: "2025-05-27"
+                totalCount: 2
+                totalAmount: 25000
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: 支出情報の登録
+      description: 新しい支出情報を登録します
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionInput"
+            example:
+              item: 食費
+              amount: 15000
+              date: "2025-05-26"
+      responses:
+        "201":
+          description: 支出情報の登録成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+              example:
+                id: 1654321234569
+                type: expense
+                item: 食費
+                amount: 15000
+                date: "2025-05-26"
+        "400":
+          description: 不正なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    FinancialSummary:
+      type: object
+      required:
+        - totalIncome
+        - totalExpense
+        - balance
+      properties:
+        totalIncome:
+          type: number
+          description: 収入合計
+          example: 300000
+        totalExpense:
+          type: number
+          description: 支出合計
+          example: 25000
+        balance:
+          type: number
+          description: 残高（収入合計 - 支出合計）
+          example: 275000
+
+    Transaction:
+      type: object
+      required:
+        - id
+        - type
+        - item
+        - amount
+        - date
+      properties:
+        id:
+          type: integer
+          description: 取引ID
+          example: 1654321234567
+        type:
+          type: string
+          enum: [income, expense]
+          description: 取引種別（収入/支出）
+          example: income
+        item:
+          type: string
+          description: 項目名
+          example: 給料
+        amount:
+          type: number
+          description: 金額
+          example: 250000
+        date:
+          type: string
+          format: date
+          description: 取引日付
+          example: "2025-05-25"
+
+    TransactionList:
+      type: object
+      required:
+        - transactions
+        - totalCount
+      properties:
+        transactions:
+          type: array
+          description: 取引リスト
+          items:
+            $ref: "#/components/schemas/Transaction"
+          example:
+            - id: 1654321234567
+              type: income
+              item: 給料
+              amount: 250000
+              date: "2025-05-25"
+            - id: 1654321234568
+              type: income
+              item: 副業収入
+              amount: 50000
+              date: "2025-05-20"
+        totalCount:
+          type: integer
+          description: 総取引数
+          example: 2
+        totalAmount:
+          type: number
+          description: 合計金額
+          example: 300000
+
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: エラーメッセージ
+          example: "エラーが発生しました"
+
+    TransactionInput:
+      type: object
+      required:
+        - item
+        - amount
+        - date
+      properties:
+        item:
+          type: string
+          description: 項目名
+          example: 給料
+        amount:
+          type: number
+          description: 金額（正の数）
+          minimum: 1
+          example: 250000
+        date:
+          type: string
+          format: date
+          description: 取引日付
+          example: "2025-05-25"

@@ -4,5 +4,11 @@
   "main": "index.js",
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "scripts": {
+    "mock": "prism mock openapi.yaml"
+  },
+  "devDependencies": {
+    "@stoplight/prism-cli": "^5.5.3"
+  }
 }

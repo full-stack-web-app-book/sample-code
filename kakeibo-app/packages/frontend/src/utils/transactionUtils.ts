@@ -6,27 +6,6 @@ export interface Transaction {
   date: string;
 }
 
-// ローカルストレージのキー
-export const STORAGE_KEY = "kakeibo-data";
-
-// 取引データを保存
-export const saveTransaction = (transaction: Transaction): void => {
-  // 既存のデータを取得
-  const transactions = getTransactions();
-
-  // 新しいデータを追加
-  transactions.push(transaction);
-
-  // ローカルストレージに保存
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
-};
-
-// 取引データを取得
-export const getTransactions = (): Transaction[] => {
-  const data = localStorage.getItem(STORAGE_KEY);
-  return data ? JSON.parse(data) : [];
-};
-
 // 日付をフォーマット（YYYY-MM-DD → YYYY年MM月DD日）
 export const formatDate = (dateString: string): string => {
   const parts = dateString.split("-");
@@ -36,4 +15,13 @@ export const formatDate = (dateString: string): string => {
 // 金額をフォーマット
 export const formatAmount = (amount: number): string => {
   return amount.toLocaleString() + "円";
+};
+
+// 今日の日付をYYYY-MM-DD形式で取得
+export const formatTodayDate = (): string => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 };

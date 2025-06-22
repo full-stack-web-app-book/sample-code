@@ -1,6 +1,6 @@
 import React, { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import type { Transaction } from "../utils/transactionUtils";
+import { formatTodayDate, type Transaction } from "../utils/transactionUtils";
 
 interface TransactionFormProps {
   onAddTransaction: (transaction: Omit<Transaction, "id">) => void;
@@ -10,19 +10,10 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   onAddTransaction,
 }) => {
   const navigate = useNavigate();
-  const [type, setType] = useState<"income" | "expense">("income");
+  const [type, setType] = useState<"income" | "expense">("expense");
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(formatTodayDate());
-
-  // 今日の日付をYYYY-MM-DD形式で取得
-  function formatTodayDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const day = String(today.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -40,7 +31,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
 
   return (
     <div className="container">
-      <h1>収支の登録</h1>
+      <h1>取引の登録</h1>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -49,20 +40,20 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
             <label>
               <input
                 type="radio"
-                value="income"
-                checked={type === "income"}
-                onChange={() => setType("income")}
-              />
-              収入
-            </label>
-            <label>
-              <input
-                type="radio"
                 value="expense"
                 checked={type === "expense"}
                 onChange={() => setType("expense")}
               />
               支出
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="income"
+                checked={type === "income"}
+                onChange={() => setType("income")}
+              />
+              収入
             </label>
           </div>
         </div>

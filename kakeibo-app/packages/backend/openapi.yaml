@@ -66,7 +66,6 @@ paths:
             schema:
               $ref: "#/components/schemas/TransactionInput"
             example:
-              type: income
               item: 給料
               amount: 250000
               date: "2025-05-25"
@@ -137,7 +136,6 @@ paths:
             schema:
               $ref: "#/components/schemas/TransactionInput"
             example:
-              type: expense
               item: 食費
               amount: 15000
               date: "2025-05-26"
@@ -265,16 +263,10 @@ components:
     TransactionInput:
       type: object
       required:
-        - type
         - item
         - amount
         - date
       properties:
-        type:
-          type: string
-          enum: [income, expense]
-          description: 取引種別（収入/支出）
-          example: income
         item:
           type: string
           description: 項目名

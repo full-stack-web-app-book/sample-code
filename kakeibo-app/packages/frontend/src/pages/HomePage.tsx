@@ -7,19 +7,30 @@ import { useFinancialSummary } from "../hooks/useFinancialSummary";
 
 const HomePage: React.FC = () => {
   const {
+    data: financialSummary,
+    isLoading: isFinancialLoading,
+    error: financialError,
+  } = useFinancialSummary();
+
+  const {
     incomeList,
     expenseList,
     isLoading: isTransactionsLoading,
-    error,
+    error: transactionsError,
   } = useTransactions();
-  const { data: financialSummary, isLoading: isFinancialLoading } =
-    useFinancialSummary();
 
   const isLoading = isTransactionsLoading || isFinancialLoading;
 
   return (
     <div className="container">
       <h1>シンプル家計簿</h1>
+
+      {financialError && (
+        <div className="error-message">{financialError.message}</div>
+      )}
+      {transactionsError && (
+        <div className="error-message">{transactionsError.message}</div>
+      )}
 
       <BalanceSummary
         totalIncome={financialSummary?.totalIncome || 0}
@@ -33,8 +44,6 @@ const HomePage: React.FC = () => {
           収支を登録する
         </Link>
       </div>
-
-      {error && <p className="error-message">エラー: {error.message}</p>}
 
       <TransactionHistory
         incomeTransactions={incomeList?.transactions || []}

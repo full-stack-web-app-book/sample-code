@@ -102,6 +102,22 @@ h2 {
   color: #3498db;
 }
 
+/* エラーメッセージのスタイル */
+.error-message {
+  color: #e74c3c;
+  background-color: #fadbd8;
+  border: 1px solid #e74c3c;
+  border-radius: 4px;
+  padding: 10px 15px;
+  margin: 10px 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.error-message.hidden {
+  display: none;
+}
+
 .summary-box p {
   font-size: 1.5em;
   font-weight: bold;

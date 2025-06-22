@@ -13,36 +13,51 @@ export const useTransactions = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    // APIから収入と支出の履歴を取得
-    const fetchTransactions = async () => {
-      setIsLoading(true);
-      try {
-        // 収入データの取得
-        const incomeResponse = await fetch("/api/transactions/income");
-        if (!incomeResponse.ok) {
-          throw new Error("収入データの取得に失敗しました");
-        }
-        const incomeData = (await incomeResponse.json()) as TransactionList;
-        setIncomeList(incomeData);
-
-        // 支出データの取得
-        const expenseResponse = await fetch("/api/transactions/expense");
-        if (!expenseResponse.ok) {
-          throw new Error("支出データの取得に失敗しました");
-        }
-        const expenseData = (await expenseResponse.json()) as TransactionList;
-        setExpenseList(expenseData);
-      } catch (err) {
-        setError(
-          err instanceof Error ? err : new Error("不明なエラーが発生しました")
-        );
-      } finally {
-        setIsLoading(false);
+  // APIから収入履歴を取得
+  const fetchIncomeTransactions = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // 収入データの取得
+      const response = await fetch("/api/transactions/income");
+      if (!response.ok) {
+        throw new Error("収入データの取得に失敗しました");
       }
-    };
+      const data = (await response.json()) as TransactionList;
+      setIncomeList(data);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err : new Error("不明なエラーが発生しました")
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    fetchTransactions();
+  // APIから支出履歴を取得
+  const fetchExpenseTransactions = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // 支出データの取得
+      const response = await fetch("/api/transactions/expense");
+      if (!response.ok) {
+        throw new Error("支出データの取得に失敗しました");
+      }
+      const data = (await response.json()) as TransactionList;
+      setExpenseList(data);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err : new Error("不明なエラーが発生しました")
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchIncomeTransactions();
+    fetchExpenseTransactions();
   }, []);
 
   // 新しい取引を追加

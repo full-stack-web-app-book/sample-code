@@ -201,7 +201,7 @@ app.post('/transactions/expense', async (c) => {
 
 serve({
   fetch: app.fetch,
-  port: 3001
+  port: 5174
 }, (info) => {
   console.log(`Server is running on http://localhost:${info.port}`)
 })

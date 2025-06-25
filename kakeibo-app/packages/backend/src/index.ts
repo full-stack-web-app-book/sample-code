@@ -51,6 +51,39 @@ app.get('/summary', async (c) => {
   }
 })
 
+// GET /transactions/income - 収入履歴一覧の取得
+app.get('/transactions/income', async (c) => {
+  try {
+    // 収入履歴を取得
+    const result = await client.query(
+      `SELECT id, type, item, amount, date FROM transactions WHERE type = 'income' ORDER BY date DESC`
+    )
+    
+    const transactions = result.rows.map(row => ({
+      id: parseInt(row.id),
+      type: row.type,
+      item: row.item,
+      amount: parseFloat(row.amount),
+      date: new Date(row.date).toISOString().split('T')[0]
+    }))
+
+    // 合計金額を計算
+    const totalAmount = transactions.reduce((sum, transaction) => sum + transaction.amount, 0)
+
+    // OpenAPI定義に従ったレスポンス形式
+    const transactionList = {
+      transactions,
+      totalCount: transactions.length,
+      totalAmount
+    }
+
+    return c.json(transactionList, 200)
+  } catch (error) {
+    console.error('Database error:', error)
+    return c.json({ message: 'サーバーエラーが発生しました' }, 500)
+  }
+})
+
 serve({
   fetch: app.fetch,
   port: 3001

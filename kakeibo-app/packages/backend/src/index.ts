@@ -117,6 +117,47 @@ app.get('/transactions/expense', async (c) => {
   }
 })
 
+// POST /transactions/income - 収入情報の登録
+app.post('/transactions/income', async (c) => {
+  try {
+    const body = await c.req.json()
+    const { item, amount, date } = body
+
+    // バリデーション
+    if (!item || !amount || !date) {
+      return c.json({ message: '必須項目が不足しています' }, 400)
+    }
+
+    if (typeof amount !== 'number' || amount <= 0) {
+      return c.json({ message: '金額は正の数である必要があります' }, 400)
+    }
+
+    // 日付の形式チェック
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return c.json({ message: '日付はYYYY-MM-DD形式で入力してください' }, 400)
+    }
+
+    // データベースに挿入
+    const result = await client.query(
+      `INSERT INTO transactions (type, item, amount, date) VALUES ($1, $2, $3, $4) RETURNING id, type, item, amount, date`,
+      ['income', item, amount, date]
+    )
+
+    const newTransaction = {
+      id: parseInt(result.rows[0].id),
+      type: result.rows[0].type,
+      item: result.rows[0].item,
+      amount: parseFloat(result.rows[0].amount),
+      date: result.rows[0].date
+    }
+
+    return c.json(newTransaction, 201)
+  } catch (error) {
+    console.error('Database error:', error)
+    return c.json({ message: 'サーバーエラーが発生しました' }, 500)
+  }
+})
+
 serve({
   fetch: app.fetch,
   port: 3001

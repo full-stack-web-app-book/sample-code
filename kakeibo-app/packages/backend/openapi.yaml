@@ -9,7 +9,7 @@ servers:
 paths:
   /summary:
     get:
-      summary: 財務サマリーの取得
+      summary: 家計簿サマリーの取得
       description: 収入合計、支出合計、残高を取得します
       responses:
         "200":
@@ -108,16 +108,16 @@ paths:
                 $ref: "#/components/schemas/TransactionList"
               example:
                 transactions:
-                  - id: 1654321234569
-                    type: expense
-                    item: 食費
-                    amount: 15000
-                    date: "2025-05-26"
                   - id: 1654321234570
                     type: expense
                     item: 光熱費
                     amount: 10000
                     date: "2025-05-27"
+                  - id: 1654321234569
+                    type: expense
+                    item: 食費
+                    amount: 15000
+                    date: "2025-05-26"
                 totalCount: 2
                 totalAmount: 25000
         "500":

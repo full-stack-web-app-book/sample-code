@@ -1,14 +1,15 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { Client } from 'pg'
+import { env } from '../env.ts'
 
 // PostgreSQLクライアントの初期化
 const client = new Client({
-  host: "localhost",
-  port: 5432,
-  database: "kakeibo_db",
-  user: "kakeibo_user",
-  password: "kakeibo_password"
+  host: env.DATABASE_HOST,
+  port: env.DATABASE_PORT,
+  database: env.DATABASE_NAME,
+  user: env.DATABASE_USER,
+  password: env.DATABASE_PASSWORD
 })
 
 // データベース接続

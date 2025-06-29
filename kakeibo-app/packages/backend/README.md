@@ -21,3 +21,9 @@ OpenAPI 定義に基づいたモックサーバーを起動します。
 # モックサーバーの起動
 npm run mock
 ```
+
+## API開発サーバの起動
+
+```bash
+npm run dev
+```

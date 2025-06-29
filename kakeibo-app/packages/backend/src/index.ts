@@ -1,0 +1,211 @@
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
+import { Client } from "pg";
+import { env } from "../env.ts";
+
+// PostgreSQLクライアントの初期化
+const client = new Client({
+  host: env.DATABASE_HOST,
+  port: env.DATABASE_PORT,
+  database: env.DATABASE_NAME,
+  user: env.DATABASE_USER,
+  password: env.DATABASE_PASSWORD,
+});
+
+// データベース接続
+await client.connect();
+
+const app = new Hono();
+
+// GET /summary - 家計簿サマリーの取得
+app.get("/summary", async (c) => {
+  try {
+    // 収入合計を取得
+    const incomeResult = await client.query(
+      `SELECT SUM(amount) as total FROM transactions WHERE type = 'income'`
+    );
+    const totalIncome = parseFloat(incomeResult.rows[0].total);
+
+    // 支出合計を取得
+    const expenseResult = await client.query(
+      `SELECT SUM(amount) as total FROM transactions WHERE type = 'expense'`
+    );
+    const totalExpense = parseFloat(expenseResult.rows[0].total);
+
+    // 残高を計算
+    const balance = totalIncome - totalExpense;
+
+    const financialSummary = {
+      totalIncome,
+      totalExpense,
+      balance,
+    };
+
+    return c.json(financialSummary, 200);
+  } catch (error) {
+    console.error("Database error:", error);
+    return c.json({ message: "サーバーエラーが発生しました" }, 500);
+  }
+});
+
+// GET /transactions/income - 収入履歴一覧の取得
+app.get("/transactions/income", async (c) => {
+  try {
+    // 収入履歴を取得
+    const result = await client.query(
+      `SELECT id, type, item, amount, date FROM transactions WHERE type = 'income' ORDER BY date DESC`
+    );
+
+    const transactions = result.rows.map((row) => ({
+      id: parseInt(row.id),
+      type: row.type,
+      item: row.item,
+      amount: parseFloat(row.amount),
+      date: new Date(row.date).toISOString().split("T")[0],
+    }));
+
+    // 合計金額を計算
+    const totalAmount = transactions.reduce(
+      (sum, transaction) => sum + transaction.amount,
+      0
+    );
+
+    const transactionList = {
+      transactions,
+      totalCount: transactions.length,
+      totalAmount,
+    };
+
+    return c.json(transactionList, 200);
+  } catch (error) {
+    console.error("Database error:", error);
+    return c.json({ message: "サーバーエラーが発生しました" }, 500);
+  }
+});
+
+// GET /transactions/expense - 支出履歴一覧の取得
+app.get("/transactions/expense", async (c) => {
+  try {
+    // 支出履歴を取得
+    const result = await client.query(
+      `SELECT id, type, item, amount, date FROM transactions WHERE type = 'expense' ORDER BY date DESC`
+    );
+
+    const transactions = result.rows.map((row) => ({
+      id: parseInt(row.id),
+      type: row.type,
+      item: row.item,
+      amount: parseFloat(row.amount),
+      date: new Date(row.date).toISOString().split("T")[0],
+    }));
+
+    // 合計金額を計算
+    const totalAmount = transactions.reduce(
+      (sum, transaction) => sum + transaction.amount,
+      0
+    );
+
+    const transactionList = {
+      transactions,
+      totalCount: transactions.length,
+      totalAmount,
+    };
+
+    return c.json(transactionList, 200);
+  } catch (error) {
+    console.error("Database error:", error);
+    return c.json({ message: "サーバーエラーが発生しました" }, 500);
+  }
+});
+
+// POST /transactions/income - 収入情報の登録
+app.post("/transactions/income", async (c) => {
+  try {
+    const body = await c.req.json();
+    const { item, amount, date } = body;
+
+    // バリデーション
+    if (!item || !amount || !date) {
+      return c.json({ message: "必須項目が不足しています" }, 400);
+    }
+
+    if (typeof amount !== "number" || amount <= 0) {
+      return c.json({ message: "金額は正の数である必要があります" }, 400);
+    }
+
+    // 日付の形式チェック
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return c.json({ message: "日付はYYYY-MM-DD形式で入力してください" }, 400);
+    }
+
+    // データベースに挿入
+    const result = await client.query(
+      `INSERT INTO transactions (type, item, amount, date) VALUES ($1, $2, $3, $4) RETURNING id, type, item, amount, date`,
+      ["income", item, amount, date]
+    );
+
+    const newTransaction = {
+      id: parseInt(result.rows[0].id),
+      type: result.rows[0].type,
+      item: result.rows[0].item,
+      amount: parseFloat(result.rows[0].amount),
+      date: result.rows[0].date,
+    };
+
+    return c.json(newTransaction, 201);
+  } catch (error) {
+    console.error("Database error:", error);
+    return c.json({ message: "サーバーエラーが発生しました" }, 500);
+  }
+});
+
+// POST /transactions/expense - 支出情報の登録
+app.post("/transactions/expense", async (c) => {
+  try {
+    const body = await c.req.json();
+    const { item, amount, date } = body;
+
+    // バリデーション
+    if (!item || !amount || !date) {
+      return c.json({ message: "必須項目が不足しています" }, 400);
+    }
+
+    if (typeof amount !== "number" || amount <= 0) {
+      return c.json({ message: "金額は正の数である必要があります" }, 400);
+    }
+
+    // 日付の形式チェック
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return c.json({ message: "日付はYYYY-MM-DD形式で入力してください" }, 400);
+    }
+
+    // データベースに挿入
+    const result = await client.query(
+      `INSERT INTO transactions (type, item, amount, date) VALUES ($1, $2, $3, $4) RETURNING id, type, item, amount, date`,
+      ["expense", item, amount, date]
+    );
+
+    const newTransaction = {
+      id: parseInt(result.rows[0].id),
+      type: result.rows[0].type,
+      item: result.rows[0].item,
+      amount: parseFloat(result.rows[0].amount),
+      date: result.rows[0].date,
+    };
+
+    return c.json(newTransaction, 201);
+  } catch (error) {
+    console.error("Database error:", error);
+    return c.json({ message: "サーバーエラーが発生しました" }, 500);
+  }
+});
+
+serve(
+  {
+    fetch: app.fetch,
+    port: 5174,
+  },
+  (info) => {
+    console.log(`Server is running on http://localhost:${info.port}`);
+  }
+);

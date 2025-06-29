@@ -226,4 +226,4 @@ components:
           type: string
           format: date
           description: 取引日付
-          example: "2025-05-25" 
+          example: "2025-05-25"

@@ -25,10 +25,19 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /transactions/income:
+  /transactions:
     get:
-      summary: 収入履歴一覧の取得
-      description: すべての収入履歴の一覧を取得します
+      summary: 取引履歴一覧の取得
+      description: すべての取引履歴の一覧を取得します。typeクエリパラメータで収入または支出をフィルタリングできます
+      parameters:
+        - name: type
+          in: query
+          description: 取引種別でフィルタリング
+          required: false
+          schema:
+            type: string
+            enum: [income, expense]
+          example: income
       responses:
         "200":
           description: 正常にデータを取得
@@ -57,8 +66,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     post:
-      summary: 収入情報の登録
-      description: 新しい収入情報を登録します
+      summary: 取引情報の登録
+      description: 新しい取引情報（収入または支出）を登録します
       requestBody:
         required: true
         content:
@@ -66,12 +75,13 @@ paths:
             schema:
               $ref: "#/components/schemas/TransactionInput"
             example:
+              type: income
               item: 給料
               amount: 250000
               date: "2025-05-25"
       responses:
         "201":
-          description: 収入情報の登録成功
+          description: 取引情報の登録成功
           content:
             application/json:
               schema:
@@ -82,76 +92,6 @@ paths:
                 item: 給料
                 amount: 250000
                 date: "2025-05-25"
-        "400":
-          description: 不正なリクエスト
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "500":
-          description: サーバーエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /transactions/expense:
-    get:
-      summary: 支出履歴一覧の取得
-      description: すべての支出履歴の一覧を取得します
-      responses:
-        "200":
-          description: 正常にデータを取得
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TransactionList"
-              example:
-                transactions:
-                  - id: 1654321234570
-                    type: expense
-                    item: 光熱費
-                    amount: 10000
-                    date: "2025-05-27"
-                  - id: 1654321234569
-                    type: expense
-                    item: 食費
-                    amount: 15000
-                    date: "2025-05-26"
-                totalCount: 2
-                totalAmount: 25000
-        "500":
-          description: サーバーエラー
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    post:
-      summary: 支出情報の登録
-      description: 新しい支出情報を登録します
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/TransactionInput"
-            example:
-              item: 食費
-              amount: 15000
-              date: "2025-05-26"
-      responses:
-        "201":
-          description: 支出情報の登録成功
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Transaction"
-              example:
-                id: 1654321234569
-                type: expense
-                item: 食費
-                amount: 15000
-                date: "2025-05-26"
         "400":
           description: 不正なリクエスト
           content:
@@ -263,10 +203,16 @@ components:
     TransactionInput:
       type: object
       required:
+        - type
         - item
         - amount
         - date
       properties:
+        type:
+          type: string
+          enum: [income, expense]
+          description: 取引種別（収入/支出）
+          example: income
         item:
           type: string
           description: 項目名
@@ -280,4 +226,4 @@ components:
           type: string
           format: date
           description: 取引日付
-          example: "2025-05-25"
+          example: "2025-05-25" 

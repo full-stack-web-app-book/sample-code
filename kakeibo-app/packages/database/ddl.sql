@@ -7,9 +7,7 @@ CREATE TABLE transactions (
     type VARCHAR NOT NULL CHECK (type IN ('income', 'expense')),
     item VARCHAR NOT NULL,
     amount INTEGER NOT NULL CHECK (amount > 0),
-    date DATE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    date DATE NOT NULL
 );
 
 -- インデックスの作成

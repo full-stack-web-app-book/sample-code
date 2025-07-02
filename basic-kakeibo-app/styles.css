@@ -12,16 +12,43 @@ body {
   line-height: 1.6;
 }
 
+header {
+  display: flex;
+  background-color: #3498db;
+  padding: 0px 20px;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+
+header nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+header nav ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+header nav ul li a:hover {
+  opacity: 0.8;
+}
+
+header h1 {
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+main {
+  min-height: calc(100vh - 64px - 32px);
+}
+
 .container {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
-}
-
-h1 {
-  text-align: center;
-  margin: 20px 0;
-  color: #2c3e50;
 }
 
 h2 {
@@ -199,6 +226,19 @@ input[type="date"] {
 
 .radio-group input {
   margin-right: 5px;
+}
+
+footer {
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3498db;
+}
+
+footer p {
+  font-size: 0.8rem;
+  color: #fff;
 }
 
 /* レスポンシブ対応 */

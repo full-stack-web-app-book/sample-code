@@ -7,43 +7,57 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="container">
+    <header>
       <h1>シンプル家計簿</h1>
-
-      <div class="summary-container">
-        <div class="summary-box income">
-          <h2>収入合計</h2>
-          <p id="total-income">0円</p>
-        </div>
-        <div class="summary-box expense">
-          <h2>支出合計</h2>
-          <p id="total-expense">0円</p>
-        </div>
-        <div class="summary-box balance">
-          <h2>残高</h2>
-          <p id="balance">0円</p>
-        </div>
-      </div>
-
-      <div class="button-container">
-        <a href="input.html" class="add-button">収支を登録する</a>
-      </div>
-
-      <div class="history-container">
-        <div class="history-section">
-          <h2>収入履歴</h2>
-          <div id="income-history" class="history-list">
-            <!-- 収入履歴がここに表示されます -->
+      <nav>
+        <ul>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="input.html">収支登録</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    <main>
+      <div class="container">
+        <div class="summary-container">
+          <div class="summary-box income">
+            <h2>収入合計</h2>
+            <p id="total-income">0円</p>
+          </div>
+          <div class="summary-box expense">
+            <h2>支出合計</h2>
+            <p id="total-expense">0円</p>
+          </div>
+          <div class="summary-box balance">
+            <h2>残高</h2>
+            <p id="balance">0円</p>
           </div>
         </div>
-        <div class="history-section">
-          <h2>支出履歴</h2>
-          <div id="expense-history" class="history-list">
-            <!-- 支出履歴がここに表示されます -->
+
+        <div class="button-container">
+          <a href="input.html" class="add-button">収支を登録する</a>
+        </div>
+
+        <div class="history-container">
+          <div class="history-section">
+            <h2>収入履歴</h2>
+            <div id="income-history" class="history-list">
+              <!-- 収入履歴がここに表示されます -->
+            </div>
+          </div>
+          <div class="history-section">
+            <h2>支出履歴</h2>
+            <div id="expense-history" class="history-list">
+              <!-- 支出履歴がここに表示されます -->
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
+
+    <footer>
+      <p>© 2025 シンプル家計簿</p>
+    </footer>
 
     <script src="common.js"></script>
     <script src="index.js"></script>

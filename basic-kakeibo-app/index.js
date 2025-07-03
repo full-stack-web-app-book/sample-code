@@ -21,7 +21,7 @@ function displayTransactions() {
   // 各取引を表示
   transactions.forEach((transaction) => {
     const historyItem = document.createElement("div");
-    historyItem.className = "history-item";
+    historyItem.className = "history__item";
 
     const formattedDate = formatDate(transaction.date);
     const formattedAmount = transaction.amount.toLocaleString() + "円";
@@ -29,9 +29,9 @@ function displayTransactions() {
     historyItem.innerHTML = `
             <div>
                 <div>${transaction.item}</div>
-                <div class="history-date">${formattedDate}</div>
+                <div class="history__date">${formattedDate}</div>
             </div>
-            <div class="${transaction.type}-amount">${formattedAmount}</div>
+            <div class="history__amount--${transaction.type}">${formattedAmount}</div>
         `;
 
     // 収入か支出かによって適切なコンテナに追加

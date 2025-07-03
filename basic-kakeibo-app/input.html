@@ -8,34 +8,35 @@
   </head>
   <body>
     <div class="container">
-      <h1>収支の登録</h1>
+      <h1 class="page-title">収支の登録</h1>
 
-      <form id="transaction-form">
-        <div class="form-group">
-          <label>種類：</label>
-          <div class="radio-group">
-            <label>
-              <input type="radio" name="type" value="income" checked /> 収入
+      <form id="transaction-form" class="form">
+        <div class="form__group">
+          <label class="form__label">種類：</label>
+          <div class="form__radio-group">
+            <label class="form__radio-label">
+              <input type="radio" name="type" value="income" checked class="form__radio-input" /> 収入
             </label>
-            <label>
-              <input type="radio" name="type" value="expense" /> 支出
+            <label class="form__radio-label">
+              <input type="radio" name="type" value="expense" class="form__radio-input" /> 支出
             </label>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="item">項目：</label>
+        <div class="form__group">
+          <label for="item" class="form__label">項目：</label>
           <input
             type="text"
             id="item"
             name="item"
             placeholder="例：給料、食費、交通費など"
             required
+            class="form__input"
           />
         </div>
 
-        <div class="form-group">
-          <label for="amount">金額（円）：</label>
+        <div class="form__group">
+          <label for="amount" class="form__label">金額（円）：</label>
           <input
             type="number"
             id="amount"
@@ -43,19 +44,20 @@
             min="1"
             placeholder="例：10000"
             required
+            class="form__input"
           />
         </div>
 
-        <div class="form-group">
-          <label for="date">日付：</label>
-          <input type="date" id="date" name="date" required />
+        <div class="form__group">
+          <label for="date" class="form__label">日付：</label>
+          <input type="date" id="date" name="date" required class="form__input" />
         </div>
 
-        <div class="button-container">
-          <button type="submit" id="submit-btn" class="submit-button">
+        <div class="button-group">
+          <button type="submit" id="submit-btn" class="button button--primary">
             登録する
           </button>
-          <a href="index.html" class="cancel-button">キャンセル</a>
+          <a href="index.html" class="button button--secondary">キャンセル</a>
         </div>
       </form>
     </div>

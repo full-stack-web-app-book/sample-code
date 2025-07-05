@@ -1,5 +1,6 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { Client } from "pg";
 import { env } from "../env.ts";
 
@@ -16,6 +17,19 @@ const client = new Client({
 await client.connect();
 
 const app = new Hono();
+
+// CORS設定を適用
+app.use(
+  "*",
+  cors({
+    origin: [
+      "http://localhost:5173", // Webサーバー
+    ],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 // GET /summary - 家計簿サマリーの取得
 app.get("/summary", async (c) => {

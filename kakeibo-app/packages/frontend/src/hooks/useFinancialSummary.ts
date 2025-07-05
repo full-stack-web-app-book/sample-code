@@ -22,7 +22,7 @@ export const useFinancialSummary = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("/api/summary");
+      const response = await fetch("http://localhost:5174/summary");
       if (!response.ok) {
         throw new Error("サーバーからデータの取得に失敗しました");
       }

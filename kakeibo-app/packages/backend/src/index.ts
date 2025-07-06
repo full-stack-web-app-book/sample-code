@@ -22,9 +22,7 @@ const app = new Hono();
 app.use(
   "*",
   cors({
-    origin: [
-      "http://localhost:5173", // Webサーバー
-    ],
+    origin: [env.FRONTEND_URL],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -124,7 +122,10 @@ app.post("/transactions", async (c) => {
     }
 
     if (type !== "income" && type !== "expense") {
-      return c.json({ message: "typeは'income'または'expense'である必要があります" }, 400);
+      return c.json(
+        { message: "typeは'income'または'expense'である必要があります" },
+        400
+      );
     }
 
     if (typeof amount !== "number" || amount <= 0) {

@@ -7,6 +7,8 @@ interface TransactionList {
   totalAmount: number;
 }
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const useTransactions = () => {
   const [incomeList, setIncomeList] = useState<TransactionList | null>(null);
   const [expenseList, setExpenseList] = useState<TransactionList | null>(null);
@@ -19,9 +21,7 @@ export const useTransactions = () => {
     setError(null);
     try {
       // 収入データの取得
-      const response = await fetch(
-        "http://localhost:5174/transactions?type=income"
-      );
+      const response = await fetch(`${BASE_URL}/transactions?type=income`);
       if (!response.ok) {
         throw new Error("収入データの取得に失敗しました");
       }
@@ -42,9 +42,7 @@ export const useTransactions = () => {
     setError(null);
     try {
       // 支出データの取得
-      const response = await fetch(
-        "http://localhost:5174/transactions?type=expense"
-      );
+      const response = await fetch(`${BASE_URL}/transactions?type=expense`);
       if (!response.ok) {
         throw new Error("支出データの取得に失敗しました");
       }
@@ -68,7 +66,7 @@ export const useTransactions = () => {
   const addTransaction = async (transaction: Omit<Transaction, "id">) => {
     try {
       // 取引追加APIを呼び出し
-      const response = await fetch("http://localhost:5174/transactions", {
+      const response = await fetch(`${BASE_URL}/transactions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

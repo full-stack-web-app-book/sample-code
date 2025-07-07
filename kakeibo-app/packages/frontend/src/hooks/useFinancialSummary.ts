@@ -7,6 +7,8 @@ export interface FinancialSummary {
   balance: number;
 }
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 // APIから財務サマリーを取得するカスタムフック
 export const useFinancialSummary = () => {
   const [data, setData] = useState<FinancialSummary>({
@@ -22,7 +24,7 @@ export const useFinancialSummary = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://localhost:5174/summary");
+      const response = await fetch(`${BASE_URL}/summary`);
       if (!response.ok) {
         throw new Error("サーバーからデータの取得に失敗しました");
       }

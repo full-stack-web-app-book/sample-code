@@ -2,7 +2,7 @@
   "name": "backend",
   "type": "module",
   "scripts": {
-    "mock": "prism mock openapi.yaml",
+    "mock": "prism mock openapi.yaml --port 5174",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"

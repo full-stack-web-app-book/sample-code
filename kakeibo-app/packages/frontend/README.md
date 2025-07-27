@@ -4,6 +4,14 @@
 
 ## 開発環境のセットアップ
 
+環境変数定義ファイルを作成する。
+
+`.env.local`
+
+```
+VITE_API_BASE_URL=http://localhost:5174
+```
+
 ```bash
 # 依存パッケージのインストール
 npm install

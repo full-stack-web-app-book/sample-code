@@ -7,6 +7,8 @@ interface TransactionList {
   totalAmount: number;
 }
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const useTransactions = () => {
   const [incomeList, setIncomeList] = useState<TransactionList | null>(null);
   const [expenseList, setExpenseList] = useState<TransactionList | null>(null);
@@ -19,7 +21,7 @@ export const useTransactions = () => {
     setError(null);
     try {
       // 収入データの取得
-      const response = await fetch("/api/transactions/income");
+      const response = await fetch(`${BASE_URL}/transactions?type=income`);
       if (!response.ok) {
         throw new Error("収入データの取得に失敗しました");
       }
@@ -40,7 +42,7 @@ export const useTransactions = () => {
     setError(null);
     try {
       // 支出データの取得
-      const response = await fetch("/api/transactions/expense");
+      const response = await fetch(`${BASE_URL}/transactions?type=expense`);
       if (!response.ok) {
         throw new Error("支出データの取得に失敗しました");
       }
@@ -63,40 +65,22 @@ export const useTransactions = () => {
   // 新しい取引を追加
   const addTransaction = async (transaction: Omit<Transaction, "id">) => {
     try {
-      if (transaction.type === "income") {
-        // 収入追加APIを呼び出し
-        const response = await fetch("/api/transactions/income", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            item: transaction.item,
-            amount: transaction.amount,
-            date: transaction.date,
-          }),
-        });
+      // 取引追加APIを呼び出し
+      const response = await fetch(`${BASE_URL}/transactions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: transaction.type,
+          item: transaction.item,
+          amount: transaction.amount,
+          date: transaction.date,
+        }),
+      });
 
-        if (!response.ok) {
-          throw new Error("収入の追加に失敗しました");
-        }
-      } else if (transaction.type === "expense") {
-        // 支出追加APIを呼び出し
-        const response = await fetch("/api/transactions/expense", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            item: transaction.item,
-            amount: transaction.amount,
-            date: transaction.date,
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error("支出の追加に失敗しました");
-        }
+      if (!response.ok) {
+        throw new Error("取引の追加に失敗しました");
       }
     } catch (err) {
       setError(

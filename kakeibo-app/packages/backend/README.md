@@ -22,7 +22,19 @@ OpenAPI 定義に基づいたモックサーバーを起動します。
 npm run mock
 ```
 
-## API開発サーバの起動
+## API 開発サーバの起動
+
+`backend/.env` ファイルを作成し以下を記載します。
+
+```
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_NAME=kakeibo_db
+DATABASE_USER=kakeibo_user
+DATABASE_PASSWORD=kakeibo_password
+```
+
+下記コマンドで開発サーバーを起動します。
 
 ```bash
 npm run dev

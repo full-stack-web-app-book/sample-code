@@ -1,5 +1,6 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { Client } from "pg";
 import { env } from "../env.ts";
 
@@ -16,6 +17,17 @@ const client = new Client({
 await client.connect();
 
 const app = new Hono();
+
+// CORS設定を適用
+app.use(
+  "*",
+  cors({
+    origin: [env.FRONTEND_URL],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 // GET /summary - 家計簿サマリーの取得
 app.get("/summary", async (c) => {
@@ -110,7 +122,10 @@ app.post("/transactions", async (c) => {
     }
 
     if (type !== "income" && type !== "expense") {
-      return c.json({ message: "typeは'income'または'expense'である必要があります" }, 400);
+      return c.json(
+        { message: "typeは'income'または'expense'である必要があります" },
+        400
+      );
     }
 
     if (typeof amount !== "number" || amount <= 0) {

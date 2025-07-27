@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // QRコードを生成するためのライブラリをインポート
-const qrcode = require("qrcode-terminal");
+import qrcode from "qrcode-terminal";
 
 // 第一引数からURLを取得
 const url = process.argv[2];

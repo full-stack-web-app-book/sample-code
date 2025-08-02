@@ -4,9 +4,9 @@
 import qrcode from "qrcode-terminal";
 
 // URL形式の簡単な検証関数
-function isValidUrl(string) {
+function isValidUrl(str) {
   try {
-    new URL(string);
+    new URL(str);
     return true;
   } catch (_) {
     return false;
@@ -15,7 +15,7 @@ function isValidUrl(string) {
 
 // qrcode-terminal の generate 関数のコールバック関数
 function callback(qrcode) {
-  console.log(qrcode);
+  console.log(qrcode); // QRコードを出力
   console.log("");
   console.log("QRコードが生成されました！");
 }

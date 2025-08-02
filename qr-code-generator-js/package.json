@@ -1,0 +1,15 @@
+{
+  "name": "qr-code-generator-js",
+  "version": "1.0.0",
+  "description": "URLからQRコードを生成するCLIツール",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "qrcode-terminal": "^0.12.0"
+  }
+}

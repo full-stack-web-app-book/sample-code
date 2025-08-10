@@ -14,7 +14,7 @@ function isValidUrl(str) {
 // qrcode-terminal の generate 関数のコールバック関数
 function callback(qrcode) {
   console.log(qrcode); // QRコードを出力
-  console.log("");
+  console.log(""); // 空行を入れる
   console.log("QRコードが生成されました！");
 }
 
@@ -39,7 +39,7 @@ function main() {
 
   // QRコードを生成してターミナルに表示
   console.log(`QRコードを生成中: ${url}`);
-  console.log("");
+  console.log(""); // 空行を入れる
   // ライブラリを使用してQRコードを生成
   // generate 関数は非同期で、生成が完了したらコールバック関数が呼ばれる
   qrcode.generate(url, { small: true }, callback);

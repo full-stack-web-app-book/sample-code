@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // QRコードを生成するためのライブラリをインポート
 import qrcode from "qrcode-terminal";
 

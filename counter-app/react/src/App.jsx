@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function App() {
+function Counter({ color }) {
   const [counter, setCounter] = useState(0);
 
   const increment = () => {
@@ -9,9 +9,17 @@ function App() {
 
   return (
     <>
-      <h1>カウンター</h1>
-      <div>{counter}</div>
+      <div style={{ color: color }}>{counter}</div>
       <button onClick={increment}>+1</button>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <>
+      <h1>カウンター</h1>
+      <Counter color="red" />
     </>
   );
 }

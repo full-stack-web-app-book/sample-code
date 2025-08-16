@@ -24,12 +24,6 @@ h2 {
   font-size: 1.2em;
 }
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
 .button-container {
   text-align: center;
   margin: 20px 0;

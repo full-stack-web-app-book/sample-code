@@ -1,6 +1,7 @@
 import React, { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { formatTodayDate, type Transaction } from "../utils/transactionUtils";
+import { Center, Container } from "@chakra-ui/react";
 
 interface TransactionFormProps {
   onAddTransaction: (transaction: Omit<Transaction, "id">) => void;
@@ -30,84 +31,86 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   };
 
   return (
-    <div className="container">
-      <h1>取引の登録</h1>
+    <Center>
+      <Container maxW="4xl">
+        <h1>取引の登録</h1>
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>種類：</label>
-          <div className="radio-group">
-            <label>
-              <input
-                type="radio"
-                value="expense"
-                checked={type === "expense"}
-                onChange={() => setType("expense")}
-              />
-              支出
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="income"
-                checked={type === "income"}
-                onChange={() => setType("income")}
-              />
-              収入
-            </label>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>種類：</label>
+            <div className="radio-group">
+              <label>
+                <input
+                  type="radio"
+                  value="expense"
+                  checked={type === "expense"}
+                  onChange={() => setType("expense")}
+                />
+                支出
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="income"
+                  checked={type === "income"}
+                  onChange={() => setType("income")}
+                />
+                収入
+              </label>
+            </div>
           </div>
-        </div>
 
-        <div className="form-group">
-          <label htmlFor="item">項目：</label>
-          <input
-            type="text"
-            id="item"
-            value={item}
-            onChange={(e) => setItem(e.target.value)}
-            placeholder="例：給料、食費、交通費など"
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="item">項目：</label>
+            <input
+              type="text"
+              id="item"
+              value={item}
+              onChange={(e) => setItem(e.target.value)}
+              placeholder="例：給料、食費、交通費など"
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="amount">金額（円）：</label>
-          <input
-            type="number"
-            id="amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            min="1"
-            placeholder="例：10000"
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="amount">金額（円）：</label>
+            <input
+              type="number"
+              id="amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              min="1"
+              placeholder="例：10000"
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="date">日付：</label>
-          <input
-            type="date"
-            id="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="date">日付：</label>
+            <input
+              type="date"
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+          </div>
 
-        <div className="button-container">
-          <button type="submit" className="add-button">
-            登録する
-          </button>
-          <button
-            type="button"
-            className="cancel-button"
-            onClick={() => navigate("/")}
-          >
-            キャンセル
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className="button-container">
+            <button type="submit" className="add-button">
+              登録する
+            </button>
+            <button
+              type="button"
+              className="cancel-button"
+              onClick={() => navigate("/")}
+            >
+              キャンセル
+            </button>
+          </div>
+        </form>
+      </Container>
+    </Center>
   );
 };
 

@@ -1,6 +1,14 @@
 import React from "react";
 import { formatAmount } from "../utils/transactionUtils";
-import { Box, Heading, Text, Flex, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Text,
+  Flex,
+  VStack,
+  Separator,
+  Stack,
+} from "@chakra-ui/react";
 import {
   BarChart,
   Bar,
@@ -76,11 +84,12 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
         borderRadius="8px"
         boxShadow="0 2px 5px rgba(0, 0, 0, 0.1)"
       >
-        <VStack gap={4} height="100%" justifyContent="center">
-          <BalanceItem title="収入合計" amount={totalIncome} />
-          <BalanceItem title="支出合計" amount={totalExpense} />
+        <Stack gap={2}>
+          <BalanceItem title="収入" amount={totalIncome} />
+          <BalanceItem title="支出" amount={totalExpense} />
+          <Separator size="sm" />
           <BalanceItem title="収支" amount={balance} />
-        </VStack>
+        </Stack>
       </Box>
     </Flex>
   );

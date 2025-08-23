@@ -18,6 +18,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FinancialSummary"
+              example:
+                totalIncome: 300000
+                totalExpense: -25000
+                balance: 275000
         "500":
           description: サーバーエラー
           content:
@@ -120,11 +124,11 @@ components:
           example: 300000
         totalExpense:
           type: number
-          description: 支出合計
-          example: 25000
+          description: 支出合計（マイナス値）
+          example: -25000
         balance:
           type: number
-          description: 残高（収入合計 - 支出合計）
+          description: 残高（収入合計 + 支出合計）
           example: 275000
 
     Transaction:
@@ -219,7 +223,7 @@ components:
           example: 給料
         amount:
           type: number
-          description: 金額（正の数）
+          description: 金額（常に正の数で入力。支出の場合はサーバー側でマイナス値に変換）
           minimum: 1
           example: 250000
         date:

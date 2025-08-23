@@ -1,11 +1,4 @@
 /* global.css */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-}
-
 body {
   background-color: #f5f5f5;
   color: #333;

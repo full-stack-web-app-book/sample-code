@@ -1,10 +1,10 @@
-GET http://localhost:4010/summary
+GET http://localhost:5174/summary
 
 ###
-GET http://localhost:4010/transactions/income
+GET http://localhost:5174/transactions?type=income
 
 ###
-POST http://localhost:4010/transactions/income
+POST http://localhost:5174/transactions/income
 Content-Type: application/json
 
 {
@@ -14,10 +14,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:4010/transactions/expense
+GET http://localhost:5174/transactions?type=expense
 
 ###
-POST http://localhost:4010/transactions/expense
+POST http://localhost:5174/transactions/expense
 Content-Type: application/json
 
 {

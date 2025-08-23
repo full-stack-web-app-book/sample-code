@@ -77,17 +77,9 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
         boxShadow="0 2px 5px rgba(0, 0, 0, 0.1)"
       >
         <VStack gap={4} height="100%" justifyContent="center">
-          <BalanceItem
-            title="収入合計"
-            amount={totalIncome}
-            color="green.500"
-          />
-          <BalanceItem title="支出合計" amount={totalExpense} color="red.500" />
-          <BalanceItem
-            title="収支"
-            amount={balance}
-            color={balance >= 0 ? "green.500" : "red.500"}
-          />
+          <BalanceItem title="収入合計" amount={totalIncome} />
+          <BalanceItem title="支出合計" amount={totalExpense} />
+          <BalanceItem title="収支" amount={balance} />
         </VStack>
       </Box>
     </Flex>
@@ -97,8 +89,9 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
 const BalanceItem: React.FC<{
   title: string;
   amount: number;
-  color?: string;
-}> = ({ title, amount, color }) => {
+}> = ({ title, amount }) => {
+  const textColor = amount >= 0 ? "green.500" : "red.500";
+
   return (
     <Flex
       width="100%"
@@ -108,7 +101,7 @@ const BalanceItem: React.FC<{
       alignItems="center"
     >
       <Heading size="sm">{title}</Heading>
-      <Text fontSize="2xl" fontWeight="bold" color={color}>
+      <Text fontSize="2xl" fontWeight="bold" color={textColor}>
         {formatAmount(amount)}
       </Text>
     </Flex>

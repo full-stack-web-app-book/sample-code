@@ -36,7 +36,7 @@ paths:
       parameters:
         - name: type
           in: query
-          description: 取引種別でフィルタリング
+          description: 取引種別でフィルタリング（income - 正の金額、expense - マイナス金額）
           required: false
           schema:
             type: string
@@ -49,20 +49,57 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TransactionList"
-              example:
-                transactions:
-                  - id: 1654321234567
-                    type: income
-                    item: 給料
-                    amount: 250000
-                    date: "2025-05-25"
-                  - id: 1654321234568
-                    type: income
-                    item: 副業収入
-                    amount: 50000
-                    date: "2025-05-20"
-                totalCount: 2
-                totalAmount: 300000
+              examples:
+                all_transactions:
+                  summary: 全取引の場合
+                  value:
+                    transactions:
+                      - id: 1654321234567
+                        item: 給料
+                        amount: 250000
+                        date: "2025-05-25"
+                      - id: 1654321234568
+                        item: 副業収入
+                        amount: 50000
+                        date: "2025-05-20"
+                      - id: 1654321234569
+                        item: 食費
+                        amount: -3000
+                        date: "2025-05-26"
+                      - id: 1654321234570
+                        item: 交通費
+                        amount: -1500
+                        date: "2025-05-27"
+                    totalCount: 4
+                    totalAmount: 295500
+                income_only:
+                  summary: 収入のみ（type=income）の場合
+                  value:
+                    transactions:
+                      - id: 1654321234567
+                        item: 給料
+                        amount: 250000
+                        date: "2025-05-25"
+                      - id: 1654321234568
+                        item: 副業収入
+                        amount: 50000
+                        date: "2025-05-20"
+                    totalCount: 2
+                    totalAmount: 300000
+                expense_only:
+                  summary: 支出のみ（type=expense）の場合
+                  value:
+                    transactions:
+                      - id: 1654321234569
+                        item: 食費
+                        amount: -3000
+                        date: "2025-05-26"
+                      - id: 1654321234570
+                        item: 交通費
+                        amount: -1500
+                        date: "2025-05-27"
+                    totalCount: 2
+                    totalAmount: -4500
         "500":
           description: サーバーエラー
           content:
@@ -71,7 +108,7 @@ paths:
                 $ref: "#/components/schemas/Error"
     post:
       summary: 取引情報の登録
-      description: 新しい取引情報（収入または支出）を登録します
+      description: 新しい取引情報を登録します。金額が正の値なら収入、マイナス値なら支出として扱われます
       requestBody:
         required: true
         content:
@@ -79,7 +116,6 @@ paths:
             schema:
               $ref: "#/components/schemas/TransactionInput"
             example:
-              type: income
               item: 給料
               amount: 250000
               date: "2025-05-25"
@@ -92,7 +128,6 @@ paths:
                 $ref: "#/components/schemas/Transaction"
               example:
                 id: 1654321234567
-                type: income
                 item: 給料
                 amount: 250000
                 date: "2025-05-25"
@@ -135,7 +170,6 @@ components:
       type: object
       required:
         - id
-        - type
         - item
         - amount
         - date
@@ -144,18 +178,13 @@ components:
           type: integer
           description: 取引ID
           example: 1654321234567
-        type:
-          type: string
-          enum: [income, expense]
-          description: 取引種別（収入/支出）
-          example: income
         item:
           type: string
           description: 項目名
           example: 給料
         amount:
           type: number
-          description: 金額
+          description: 金額（収入の場合は正の値、支出の場合はマイナス値）
           example: 250000
         date:
           type: string
@@ -176,12 +205,10 @@ components:
             $ref: "#/components/schemas/Transaction"
           example:
             - id: 1654321234567
-              type: income
               item: 給料
               amount: 250000
               date: "2025-05-25"
             - id: 1654321234568
-              type: income
               item: 副業収入
               amount: 50000
               date: "2025-05-20"
@@ -207,24 +234,17 @@ components:
     TransactionInput:
       type: object
       required:
-        - type
         - item
         - amount
         - date
       properties:
-        type:
-          type: string
-          enum: [income, expense]
-          description: 取引種別（収入/支出）
-          example: income
         item:
           type: string
           description: 項目名
           example: 給料
         amount:
           type: number
-          description: 金額（常に正の数で入力。支出の場合はサーバー側でマイナス値に変換）
-          minimum: 1
+          description: 金額（正の値は収入、マイナス値は支出として扱われます）
           example: 250000
         date:
           type: string

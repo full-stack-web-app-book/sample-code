@@ -4,7 +4,10 @@ GET http://localhost:5174/summary
 GET http://localhost:5174/transactions?type=income
 
 ###
-POST http://localhost:5174/transactions/income
+GET http://localhost:5174/transactions?type=expense
+
+###
+POST http://localhost:5174/transactions
 Content-Type: application/json
 
 {
@@ -14,14 +17,11 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:5174/transactions?type=expense
-
-###
-POST http://localhost:5174/transactions/expense
+POST http://localhost:5174/transactions
 Content-Type: application/json
 
 {
   "item": "食費",
-  "amount": 1500,
+  "amount": -1500,
   "date": "2025-06-01"
 }

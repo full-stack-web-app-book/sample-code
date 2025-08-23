@@ -32,20 +32,20 @@ app.use(
 // GET /summary - 家計簿サマリーの取得
 app.get("/summary", async (c) => {
   try {
-    // 収入合計を取得
+    // 収入合計を取得（正の値）
     const incomeResult = await client.query(
-      `SELECT SUM(amount) as total FROM transactions WHERE type = 'income'`
+      `SELECT COALESCE(SUM(amount), 0) as total FROM transactions WHERE amount > 0`
     );
     const totalIncome = parseFloat(incomeResult.rows[0].total);
 
-    // 支出合計を取得
+    // 支出合計を取得（負の値の合計、結果は負の値）
     const expenseResult = await client.query(
-      `SELECT SUM(amount) as total FROM transactions WHERE type = 'expense'`
+      `SELECT COALESCE(SUM(amount), 0) as total FROM transactions WHERE amount < 0`
     );
     const totalExpense = parseFloat(expenseResult.rows[0].total);
 
-    // 残高を計算
-    const balance = totalIncome - totalExpense;
+    // 残高を計算（収入 + 支出、支出は負の値なので実質的に引き算）
+    const balance = totalIncome + totalExpense;
 
     const financialSummary = {
       totalIncome,
@@ -65,16 +65,16 @@ app.get("/transactions", async (c) => {
   try {
     const type = c.req.query("type");
 
-    let query = `SELECT id, type, item, amount, date FROM transactions`;
+    let query = `SELECT id, item, amount, date FROM transactions`;
     let countQuery = `SELECT COUNT(*) as total FROM transactions`;
     let params: string[] = [];
 
     // typeクエリパラメータがある場合はフィルタリング
     if (type && (type === "income" || type === "expense")) {
-      const addTypeQuery = ` WHERE type = $1`;
+      const addTypeQuery =
+        type === "income" ? ` WHERE amount > 0` : ` WHERE amount < 0`;
       query += addTypeQuery;
       countQuery += addTypeQuery;
-      params.push(type);
     }
 
     query += ` ORDER BY date DESC`;
@@ -85,9 +85,8 @@ app.get("/transactions", async (c) => {
 
     const transactions = result.rows.map((row) => ({
       id: parseInt(row.id),
-      type: row.type,
       item: row.item,
-      amount: parseFloat(row.amount),
+      amount: parseFloat(row.amount), // 実際の値（正負含む）を返す
       date: new Date(row.date).toISOString().split("T")[0],
     }));
 
@@ -114,22 +113,15 @@ app.get("/transactions", async (c) => {
 app.post("/transactions", async (c) => {
   try {
     const body = await c.req.json();
-    const { type, item, amount, date } = body;
+    const { item, amount, date } = body;
 
     // バリデーション
-    if (!type || !item || !amount || !date) {
+    if (!item || amount === undefined || !date) {
       return c.json({ message: "必須項目が不足しています" }, 400);
     }
 
-    if (type !== "income" && type !== "expense") {
-      return c.json(
-        { message: "typeは'income'または'expense'である必要があります" },
-        400
-      );
-    }
-
-    if (typeof amount !== "number" || amount <= 0) {
-      return c.json({ message: "金額は正の数である必要があります" }, 400);
+    if (typeof amount !== "number" || amount === 0) {
+      return c.json({ message: "金額は0以外の数値である必要があります" }, 400);
     }
 
     // 日付の形式チェック
@@ -139,13 +131,12 @@ app.post("/transactions", async (c) => {
 
     // データベースに挿入
     const result = await client.query(
-      `INSERT INTO transactions (type, item, amount, date) VALUES ($1, $2, $3, $4) RETURNING id, type, item, amount, date`,
-      [type, item, amount, date]
+      `INSERT INTO transactions (item, amount, date) VALUES ($1, $2, $3) RETURNING id, item, amount, date`,
+      [item, amount, date]
     );
 
     const newTransaction = {
       id: parseInt(result.rows[0].id),
-      type: result.rows[0].type,
       item: result.rows[0].item,
       amount: parseFloat(result.rows[0].amount),
       date: result.rows[0].date,

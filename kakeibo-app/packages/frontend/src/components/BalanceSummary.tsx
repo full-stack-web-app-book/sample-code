@@ -1,22 +1,15 @@
 import React from "react";
 import { formatAmount } from "../utils/transactionUtils";
-import {
-  Box,
-  Heading,
-  Text,
-  Flex,
-  VStack,
-  Separator,
-  Stack,
-} from "@chakra-ui/react";
+import { Box, Heading, Text, Flex, Separator, Stack } from "@chakra-ui/react";
+import { Chart, useChart } from "@chakra-ui/charts";
 import {
   BarChart,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
+  Cell,
+  LabelList,
 } from "recharts";
 
 interface BalanceSummaryProps {
@@ -36,19 +29,6 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
     return <Text>データを取得中...</Text>;
   }
 
-  const chartData = [
-    {
-      name: "収入",
-      amount: totalIncome,
-      fill: "#48BB78",
-    },
-    {
-      name: "支出",
-      amount: totalExpense,
-      fill: "#F56565",
-    },
-  ];
-
   return (
     <Flex gap={6} minHeight="300px">
       {/* 左側: 縦棒グラフ */}
@@ -62,18 +42,7 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
         <Heading size="md" mb={4} textAlign="center">
           収支グラフ
         </Heading>
-        <ResponsiveContainer width="100%" height={250}>
-          <BarChart
-            data={chartData}
-            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip formatter={(value) => formatAmount(Number(value))} />
-            <Bar dataKey="amount" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
+        <BalanceGraph data={{ totalIncome, totalExpense }} />
       </Box>
 
       {/* 右側: 数値表示 */}
@@ -92,6 +61,52 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
         </Stack>
       </Box>
     </Flex>
+  );
+};
+
+const BalanceGraph: React.FC<{
+  data: { totalIncome: number; totalExpense: number };
+}> = ({ data }) => {
+  const chartData = [
+    {
+      name: "収入",
+      amount: data.totalIncome,
+    },
+    {
+      name: "支出",
+      amount: data.totalExpense,
+    },
+  ];
+
+  const chart = useChart({
+    data: chartData,
+    series: [{ name: "amount", color: "teal.solid" }],
+  });
+
+  return (
+    <Chart.Root maxH="sm" chart={chart}>
+      <BarChart data={chart.data} margin={{ top: 30, bottom: 40 }}>
+        <CartesianGrid stroke={chart.color("border.muted")} vertical={false} />
+        <XAxis dataKey="name" />
+        <YAxis tickFormatter={(value) => formatAmount(Number(value))} />
+        {chart.series.map((item, index) => (
+          <Bar
+            key={index}
+            radius={4}
+            dataKey={chart.key(item.name)}
+            fill={chart.color(item.color)}
+          >
+            <LabelList dataKey={chart.key("amount")} position="top" />
+            {chart.data.map((item, index) => (
+              <Cell
+                key={index}
+                fill={chart.color(item.amount > 0 ? "green.500" : "red.500")}
+              />
+            ))}
+          </Bar>
+        ))}
+      </BarChart>
+    </Chart.Root>
   );
 };
 

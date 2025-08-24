@@ -12,53 +12,50 @@ import {
   LabelList,
 } from "recharts";
 import SummaryCard from "./SummaryCard";
+import {
+  useFinancialSummary,
+  type FinancialSummary,
+} from "@/hooks/useFinancialSummary";
 
-interface BalanceSummaryProps {
-  totalIncome: number;
-  totalExpense: number;
-  balance: number;
-  isLoading?: boolean;
-}
-
-const BalanceSummary: React.FC<BalanceSummaryProps> = ({
-  totalIncome,
-  totalExpense,
-  balance,
-  isLoading = false,
-}) => {
-  if (isLoading) {
-    return <Text>データを取得中...</Text>;
-  }
-
+const BalanceSummary: React.FC = () => {
   return (
-    <SummaryCard title="収支サマリー">
-      <Flex gap={6}>
-        <Box flex={1}>
-          <BalanceGraph data={{ totalIncome, totalExpense }} />
-        </Box>
-        <Box flex={1}>
-          <BalanceTotal
-            income={totalIncome}
-            expense={totalExpense}
-            balance={balance}
-          />
-        </Box>
-      </Flex>
+    <SummaryCard title="収支サマリー" minH="sm">
+      <BalanceSummaryContent />
     </SummaryCard>
   );
 };
 
+const BalanceSummaryContent: React.FC = () => {
+  const { data, isLoading, error } = useFinancialSummary();
+  if (isLoading) {
+    return <Text>データを取得中...</Text>;
+  }
+  if (error) {
+    return <Text>エラーが発生しました: {error.message}</Text>;
+  }
+  return (
+    <Flex gap={6}>
+      <Box flex={1}>
+        <BalanceGraph data={data} />
+      </Box>
+      <Box flex={1}>
+        <BalanceTotal data={data} />
+      </Box>
+    </Flex>
+  );
+};
+
 const BalanceGraph: React.FC<{
-  data: { totalIncome: number; totalExpense: number };
-}> = ({ data }) => {
+  data: FinancialSummary;
+}> = ({ data: { totalIncome, totalExpense } }) => {
   const chartData = [
     {
       name: "収入",
-      amount: data.totalIncome,
+      amount: totalIncome,
     },
     {
       name: "支出",
-      amount: data.totalExpense,
+      amount: totalExpense,
     },
   ];
 
@@ -94,15 +91,13 @@ const BalanceGraph: React.FC<{
   );
 };
 
-const BalanceTotal: React.FC<{
-  income: number;
-  expense: number;
-  balance: number;
-}> = ({ income, expense, balance }) => {
+const BalanceTotal: React.FC<{ data: FinancialSummary }> = ({
+  data: { totalIncome, totalExpense, balance },
+}) => {
   return (
     <Stack gap={2}>
-      <BalanceItem title="収入" amount={income} />
-      <BalanceItem title="支出" amount={expense} />
+      <BalanceItem title="収入" amount={totalIncome} />
+      <BalanceItem title="支出" amount={totalExpense} />
       <Separator size="sm" />
       <BalanceItem title="収支" amount={balance} />
     </Stack>

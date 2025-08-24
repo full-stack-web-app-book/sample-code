@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import BalanceSummary from "../components/BalanceSummary";
-import TransactionHistory from "../components/TransactionHistory";
-import { useTransactions } from "../hooks/useTransactions";
-import { useFinancialSummary } from "../hooks/useFinancialSummary";
 import { Center, Container } from "@chakra-ui/react";
+import BalanceSummary from "@/components/BalanceSummary";
+import TransactionHistory from "@/components/TransactionHistory";
+import { useTransactions } from "@/hooks/useTransactions";
+import { useFinancialSummary } from "@/hooks/useFinancialSummary";
 
 const HomePage: React.FC = () => {
   const {

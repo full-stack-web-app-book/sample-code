@@ -1,6 +1,6 @@
 import React from "react";
-import TransactionForm from "../components/TransactionForm";
-import { useTransactions } from "../hooks/useTransactions";
+import TransactionForm from "@/components/TransactionForm";
+import { useTransactions } from "@/hooks/useTransactions";
 
 const InputPage: React.FC = () => {
   const { addTransaction } = useTransactions();

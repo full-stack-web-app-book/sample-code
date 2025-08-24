@@ -27,9 +27,7 @@ const HomePage: React.FC = () => {
 
   return (
     <Center>
-      <Container maxW="4xl">
-        <h1>シンプル家計簿</h1>
-
+      <Container maxW="4xl" py={6}>
         {financialError && (
           <div className="error-message">{financialError.message}</div>
         )}

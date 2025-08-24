@@ -4,7 +4,7 @@ import BalanceSummary from "@/components/BalanceSummary";
 import TransactionHistory from "@/components/TransactionHistory";
 import { useTransactions } from "@/hooks/useTransactions";
 import { useFinancialSummary } from "@/hooks/useFinancialSummary";
-import { Center, Container, Flex, Stack } from "@chakra-ui/react";
+import { Box, Center, Container, Flex, Stack } from "@chakra-ui/react";
 import InputButton from "@/components/InputButton";
 
 const HomePage: React.FC = () => {
@@ -47,10 +47,20 @@ const HomePage: React.FC = () => {
             isLoading={isLoading}
           />
 
-          <TransactionHistory
-            incomeTransactions={incomeList?.transactions || []}
-            expenseTransactions={expenseList?.transactions || []}
-          />
+          <Flex gap={6}>
+            <Box flex={1}>
+              <TransactionHistory
+                title="収入履歴"
+                transactions={incomeList?.transactions || []}
+              />
+            </Box>
+            <Box flex={1}>
+              <TransactionHistory
+                title="支出履歴"
+                transactions={expenseList?.transactions || []}
+              />
+            </Box>
+          </Flex>
         </Stack>
       </Container>
     </Center>

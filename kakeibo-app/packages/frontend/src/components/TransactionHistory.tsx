@@ -1,68 +1,57 @@
-// filepath: /Users/kz-takasaki/work/github/web-app-study/kakeibo-app/packages/frontend/src/components/TransactionHistory.tsx
 import React from "react";
 import {
   type Transaction,
   formatDate,
   formatAmount,
 } from "../utils/transactionUtils";
+import SummaryCard from "./SummaryCard";
+import { Box, Flex, Separator, Stack, Text } from "@chakra-ui/react";
 
 interface TransactionHistoryProps {
-  incomeTransactions: Transaction[];
-  expenseTransactions: Transaction[];
+  title: string;
+  transactions: Transaction[];
 }
 
 const TransactionHistory: React.FC<TransactionHistoryProps> = ({
-  incomeTransactions,
-  expenseTransactions,
+  title,
+  transactions,
 }) => {
   return (
-    <div className="history-container">
-      <div className="history-section">
-        <h2>収入履歴</h2>
-        <div className="history-list">
-          {incomeTransactions.length > 0 ? (
-            incomeTransactions.map((transaction) => (
-              <div className="history-item" key={transaction.id}>
-                <div>
-                  <div>{transaction.item}</div>
-                  <div className="history-date">
-                    {formatDate(transaction.date)}
-                  </div>
-                </div>
-                <div className="income-amount">
-                  {formatAmount(transaction.amount)}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>収入の記録がありません</p>
-          )}
-        </div>
-      </div>
+    <SummaryCard title={title}>
+      <Stack separator={<Separator size="sm" />}>
+        {transactions.length > 0 ? (
+          transactions.map((transaction) => (
+            <TransactionHistoryItem
+              key={transaction.id}
+              transaction={transaction}
+            />
+          ))
+        ) : (
+          <p>記録がありません</p>
+        )}
+      </Stack>
+    </SummaryCard>
+  );
+};
 
-      <div className="history-section">
-        <h2>支出履歴</h2>
-        <div className="history-list">
-          {expenseTransactions.length > 0 ? (
-            expenseTransactions.map((transaction) => (
-              <div className="history-item" key={transaction.id}>
-                <div>
-                  <div>{transaction.item}</div>
-                  <div className="history-date">
-                    {formatDate(transaction.date)}
-                  </div>
-                </div>
-                <div className="expense-amount">
-                  {formatAmount(transaction.amount)}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>支出の記録がありません</p>
-          )}
-        </div>
-      </div>
-    </div>
+const TransactionHistoryItem: React.FC<{ transaction: Transaction }> = ({
+  transaction,
+}) => {
+  return (
+    <Flex justifyContent="space-between" alignItems="center">
+      <Box>
+        <Text>{transaction.item}</Text>
+        <Text color="gray.400" fontSize="sm">
+          {formatDate(transaction.date)}
+        </Text>
+      </Box>
+      <Text
+        color={transaction.amount > 0 ? "green.500" : "red.500"}
+        fontWeight="bold"
+      >
+        {formatAmount(transaction.amount)}
+      </Text>
+    </Flex>
   );
 };
 

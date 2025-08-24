@@ -11,6 +11,7 @@ import {
   Cell,
   LabelList,
 } from "recharts";
+import SummaryCard from "./SummaryCard";
 
 interface BalanceSummaryProps {
   totalIncome: number;
@@ -30,37 +31,20 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
   }
 
   return (
-    <Flex gap={6} minHeight="300px">
-      {/* 左側: 縦棒グラフ */}
-      <Box
-        flex={1}
-        backgroundColor="white"
-        p={4}
-        borderRadius="8px"
-        boxShadow="0 2px 5px rgba(0, 0, 0, 0.1)"
-      >
-        <Heading size="md" mb={4} textAlign="center">
-          収支グラフ
-        </Heading>
-        <BalanceGraph data={{ totalIncome, totalExpense }} />
-      </Box>
-
-      {/* 右側: 数値表示 */}
-      <Box
-        flex={1}
-        backgroundColor="white"
-        p={4}
-        borderRadius="8px"
-        boxShadow="0 2px 5px rgba(0, 0, 0, 0.1)"
-      >
-        <Stack gap={2}>
-          <BalanceItem title="収入" amount={totalIncome} />
-          <BalanceItem title="支出" amount={totalExpense} />
-          <Separator size="sm" />
-          <BalanceItem title="収支" amount={balance} />
-        </Stack>
-      </Box>
-    </Flex>
+    <SummaryCard title="収支サマリー">
+      <Flex gap={6}>
+        <Box flex={1}>
+          <BalanceGraph data={{ totalIncome, totalExpense }} />
+        </Box>
+        <Box flex={1}>
+          <BalanceTotal
+            income={totalIncome}
+            expense={totalExpense}
+            balance={balance}
+          />
+        </Box>
+      </Flex>
+    </SummaryCard>
   );
 };
 
@@ -85,7 +69,7 @@ const BalanceGraph: React.FC<{
 
   return (
     <Chart.Root maxH="sm" chart={chart}>
-      <BarChart data={chart.data} margin={{ top: 30, bottom: 40 }}>
+      <BarChart data={chart.data}>
         <CartesianGrid stroke={chart.color("border.muted")} vertical={false} />
         <XAxis dataKey="name" />
         <YAxis tickFormatter={(value) => formatAmount(Number(value))} />
@@ -107,6 +91,21 @@ const BalanceGraph: React.FC<{
         ))}
       </BarChart>
     </Chart.Root>
+  );
+};
+
+const BalanceTotal: React.FC<{
+  income: number;
+  expense: number;
+  balance: number;
+}> = ({ income, expense, balance }) => {
+  return (
+    <Stack gap={2}>
+      <BalanceItem title="収入" amount={income} />
+      <BalanceItem title="支出" amount={expense} />
+      <Separator size="sm" />
+      <BalanceItem title="収支" amount={balance} />
+    </Stack>
   );
 };
 

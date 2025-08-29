@@ -1,6 +1,15 @@
 import React from "react";
 import { formatAmount } from "../utils/transactionUtils";
-import { Box, Heading, Text, Flex, Separator, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Text,
+  Flex,
+  Separator,
+  Stack,
+  Skeleton,
+  SkeletonText,
+} from "@chakra-ui/react";
 import { Chart, useChart } from "@chakra-ui/charts";
 import {
   BarChart,
@@ -12,10 +21,7 @@ import {
   LabelList,
 } from "recharts";
 import SummaryCard from "./SummaryCard";
-import {
-  useFinancialSummary,
-  type FinancialSummary,
-} from "@/hooks/useFinancialSummary";
+import { useFinancialSummary } from "@/hooks/useFinancialSummary";
 
 const BalanceSummary: React.FC = () => {
   return (
@@ -26,36 +32,29 @@ const BalanceSummary: React.FC = () => {
 };
 
 const BalanceSummaryContent: React.FC = () => {
-  const { data, isLoading, error } = useFinancialSummary();
-  if (isLoading) {
-    return <Text>データを取得中...</Text>;
-  }
-  if (error) {
-    return <Text>エラーが発生しました: {error.message}</Text>;
-  }
   return (
     <Flex gap={6}>
       <Box flex={1}>
-        <BalanceGraph data={data} />
+        <BalanceGraph />
       </Box>
       <Box flex={1}>
-        <BalanceTotal data={data} />
+        <BalanceTotal />
       </Box>
     </Flex>
   );
 };
 
-const BalanceGraph: React.FC<{
-  data: FinancialSummary;
-}> = ({ data: { totalIncome, totalExpense } }) => {
+const BalanceGraph: React.FC = () => {
+  const { data, isLoading, error } = useFinancialSummary();
+
   const chartData = [
     {
       name: "収入",
-      amount: totalIncome,
+      amount: data?.totalIncome,
     },
     {
       name: "支出",
-      amount: totalExpense,
+      amount: data?.totalExpense,
     },
   ];
 
@@ -65,42 +64,62 @@ const BalanceGraph: React.FC<{
   });
 
   return (
-    <Chart.Root maxH="sm" chart={chart}>
-      <BarChart data={chart.data}>
-        <CartesianGrid stroke={chart.color("border.muted")} vertical={false} />
-        <XAxis dataKey="name" />
-        <YAxis tickFormatter={(value) => formatAmount(Number(value))} />
-        {chart.series.map((item, index) => (
-          <Bar
-            key={index}
-            radius={4}
-            dataKey={chart.key(item.name)}
-            fill={chart.color(item.color)}
-          >
-            <LabelList dataKey={chart.key("amount")} position="top" />
-            {chart.data.map((item, index) => (
-              <Cell
+    <>
+      {isLoading ? (
+        <Skeleton height="200px" borderRadius="6px" />
+      ) : error ? (
+        <Text color="red.500">データの取得に失敗しました</Text>
+      ) : (
+        <Chart.Root maxH="sm" chart={chart}>
+          <BarChart data={chart.data}>
+            <CartesianGrid
+              stroke={chart.color("border.muted")}
+              vertical={false}
+            />
+            <XAxis dataKey="name" />
+            <YAxis tickFormatter={(value) => formatAmount(Number(value))} />
+            {chart.series.map((item, index) => (
+              <Bar
                 key={index}
-                fill={chart.color(item.amount > 0 ? "green.500" : "red.500")}
-              />
+                radius={4}
+                dataKey={chart.key(item.name)}
+                fill={chart.color(item.color)}
+              >
+                <LabelList dataKey={chart.key("amount")} position="top" />
+                {chart.data.map((item, index) => (
+                  <Cell
+                    key={index}
+                    fill={chart.color(
+                      item.amount > 0 ? "green.500" : "red.500"
+                    )}
+                  />
+                ))}
+              </Bar>
             ))}
-          </Bar>
-        ))}
-      </BarChart>
-    </Chart.Root>
+          </BarChart>
+        </Chart.Root>
+      )}
+    </>
   );
 };
 
-const BalanceTotal: React.FC<{ data: FinancialSummary }> = ({
-  data: { totalIncome, totalExpense, balance },
-}) => {
+const BalanceTotal: React.FC = () => {
+  const { data, isLoading, error } = useFinancialSummary();
   return (
-    <Stack gap={2}>
-      <BalanceItem title="収入" amount={totalIncome} />
-      <BalanceItem title="支出" amount={totalExpense} />
-      <Separator size="sm" />
-      <BalanceItem title="収支" amount={balance} />
-    </Stack>
+    <>
+      {isLoading ? (
+        <SkeletonText />
+      ) : error ? (
+        <Text color="red.500">データの取得に失敗しました</Text>
+      ) : (
+        <Stack gap={2}>
+          <BalanceItem title="収入" amount={data?.totalIncome} />
+          <BalanceItem title="支出" amount={data?.totalExpense} />
+          <Separator size="sm" />
+          <BalanceItem title="収支" amount={data?.balance} />
+        </Stack>
+      )}
+    </>
   );
 };
 

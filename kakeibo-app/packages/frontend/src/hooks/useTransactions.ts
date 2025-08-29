@@ -10,8 +10,8 @@ interface TransactionList {
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useTransactions = () => {
-  const [incomeList, setIncomeList] = useState<TransactionList | null>(null);
-  const [expenseList, setExpenseList] = useState<TransactionList | null>(null);
+  const [incomeList, setIncomeList] = useState<TransactionList>();
+  const [expenseList, setExpenseList] = useState<TransactionList>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 

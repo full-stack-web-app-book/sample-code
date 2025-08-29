@@ -1,15 +1,111 @@
-import React from "react";
+import React, { useState, type FormEvent } from "react";
 import { Center, Container } from "@chakra-ui/react";
-import TransactionForm from "@/components/TransactionForm";
 import { useTransactions } from "@/hooks/useTransactions";
+import { formatTodayDate, type Transaction } from "@/utils/transactionUtils";
+import { useNavigate } from "react-router-dom";
 
 const InputPage: React.FC = () => {
   const { addTransaction } = useTransactions();
+  const [type, setType] = useState<"income" | "expense">("expense");
+  const [item, setItem] = useState("");
+  const [amount, setAmount] = useState("");
+  const [date, setDate] = useState(formatTodayDate());
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    const newTransaction: Omit<Transaction, "id"> = {
+      type,
+      item,
+      amount: Number(amount),
+      date,
+    };
+
+    addTransaction(newTransaction);
+    navigate("/");
+  };
 
   return (
     <Center>
       <Container maxW="4xl" py={6}>
-        <TransactionForm onAddTransaction={addTransaction} />
+        <h1>取引の登録</h1>
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>種類：</label>
+            <div className="radio-group">
+              <label>
+                <input
+                  type="radio"
+                  value="expense"
+                  checked={type === "expense"}
+                  onChange={() => setType("expense")}
+                />
+                支出
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="income"
+                  checked={type === "income"}
+                  onChange={() => setType("income")}
+                />
+                収入
+              </label>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="item">項目：</label>
+            <input
+              type="text"
+              id="item"
+              value={item}
+              onChange={(e) => setItem(e.target.value)}
+              placeholder="例：給料、食費、交通費など"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="amount">金額（円）：</label>
+            <input
+              type="number"
+              id="amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              min="1"
+              placeholder="例：10000"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="date">日付：</label>
+            <input
+              type="date"
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="button-container">
+            <button type="submit" className="add-button">
+              登録する
+            </button>
+            <button
+              type="button"
+              className="cancel-button"
+              onClick={() => navigate("/")}
+            >
+              キャンセル
+            </button>
+          </div>
+        </form>
       </Container>
     </Center>
   );

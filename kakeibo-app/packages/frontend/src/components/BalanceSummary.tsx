@@ -11,15 +11,7 @@ import {
   SkeletonText,
 } from "@chakra-ui/react";
 import { Chart, useChart } from "@chakra-ui/charts";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Cell,
-  LabelList,
-} from "recharts";
+import { BarChart, Bar, YAxis, CartesianGrid, Cell, LabelList } from "recharts";
 import SummaryCard from "./SummaryCard";
 import { useFinancialSummary } from "@/hooks/useFinancialSummary";
 
@@ -76,7 +68,6 @@ const BalanceGraph: React.FC = () => {
               stroke={chart.color("border.muted")}
               vertical={false}
             />
-            <XAxis dataKey="name" />
             <YAxis tickFormatter={(value) => formatAmount(Number(value))} />
             {chart.series.map((item, index) => (
               <Bar

@@ -79,7 +79,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
         >
           キャンセル
         </Button>
-        <Button type="submit" colorPalette="cyan" flex={1}>
+        <Button type="submit" colorPalette="teal" flex={1} fontWeight="bold">
           登録
         </Button>
       </HStack>

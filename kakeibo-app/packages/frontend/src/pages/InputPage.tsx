@@ -44,9 +44,22 @@ const InputPage: React.FC = () => {
           maxW="xl"
         >
           <Tabs.List bg="bg.muted" rounded="lg" mb="4">
-            <Tabs.Trigger value="expense">支出</Tabs.Trigger>
-            <Tabs.Trigger value="income">収入</Tabs.Trigger>
-            <Tabs.Indicator rounded="l2" />
+            <Tabs.Trigger 
+              value="expense"
+              _selected={{ color: "white", fontWeight: "bold" }}
+            >
+              支出
+            </Tabs.Trigger>
+            <Tabs.Trigger 
+              value="income"
+              _selected={{ color: "white", fontWeight: "bold" }}
+            >
+              収入
+            </Tabs.Trigger>
+            <Tabs.Indicator 
+              rounded="l2" 
+              bg={type === "expense" ? "red.500" : "green.500"} 
+            />
           </Tabs.List>
           <Tabs.Content value="expense">
             <TransactionForm

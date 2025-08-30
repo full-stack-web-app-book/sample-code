@@ -25,6 +25,10 @@ const InputPage: React.FC = () => {
     navigate("/");
   };
 
+  const handleCancel = () => {
+    navigate("/");
+  };
+
   const handleTabChange = (value: string) => {
     setType(value as "income" | "expense");
   };
@@ -45,10 +49,16 @@ const InputPage: React.FC = () => {
             <Tabs.Indicator rounded="l2" />
           </Tabs.List>
           <Tabs.Content value="expense">
-            <TransactionForm onSubmit={handleFormSubmit} />
+            <TransactionForm
+              onSubmit={handleFormSubmit}
+              onCancel={handleCancel}
+            />
           </Tabs.Content>
           <Tabs.Content value="income">
-            <TransactionForm onSubmit={handleFormSubmit} />
+            <TransactionForm
+              onSubmit={handleFormSubmit}
+              onCancel={handleCancel}
+            />
           </Tabs.Content>
         </Tabs.Root>
       </Center>

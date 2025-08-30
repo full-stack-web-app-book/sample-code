@@ -1,5 +1,5 @@
 import React, { useState, type FormEvent } from "react";
-import { VStack, Input, Button, Field } from "@chakra-ui/react";
+import { VStack, Input, Button, Field, HStack } from "@chakra-ui/react";
 import { formatTodayDate } from "@/utils/transactionUtils";
 
 export interface TransactionFormData {
@@ -10,10 +10,12 @@ export interface TransactionFormData {
 
 interface TransactionFormProps {
   onSubmit: (data: TransactionFormData) => void;
+  onCancel?: () => void;
 }
 
 export const TransactionForm: React.FC<TransactionFormProps> = ({
   onSubmit,
+  onCancel,
 }) => {
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
@@ -67,9 +69,20 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
         />
       </Field.Root>
 
-      <Button type="submit" colorPalette="cyan" width="sm" mt={4}>
-        登録
-      </Button>
+      <HStack width="sm" mt={4} gap={3}>
+        <Button
+          type="button"
+          colorPalette="gray"
+          variant="outline"
+          flex={1}
+          onClick={onCancel}
+        >
+          キャンセル
+        </Button>
+        <Button type="submit" colorPalette="cyan" flex={1}>
+          登録
+        </Button>
+      </HStack>
     </VStack>
   );
 };

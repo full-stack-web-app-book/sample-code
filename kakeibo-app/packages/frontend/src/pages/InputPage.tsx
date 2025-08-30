@@ -43,22 +43,32 @@ const InputPage: React.FC = () => {
           width="full"
           maxW="xl"
         >
-          <Tabs.List bg="bg.muted" rounded="lg" mb="4">
-            <Tabs.Trigger 
+          <Tabs.List
+            bg="bg.muted"
+            rounded="lg"
+            mb="4"
+            justifyContent="center"
+            width="100%"
+          >
+            <Tabs.Trigger
               value="expense"
               _selected={{ color: "white", fontWeight: "bold" }}
+              width="30%"
+              justifyContent="center"
             >
               支出
             </Tabs.Trigger>
-            <Tabs.Trigger 
+            <Tabs.Trigger
               value="income"
               _selected={{ color: "white", fontWeight: "bold" }}
+              width="30%"
+              justifyContent="center"
             >
               収入
             </Tabs.Trigger>
-            <Tabs.Indicator 
-              rounded="l2" 
-              bg={type === "expense" ? "red.500" : "green.500"} 
+            <Tabs.Indicator
+              rounded="l2"
+              bg={type === "expense" ? "red.500" : "green.500"}
             />
           </Tabs.List>
           <Tabs.Content value="expense">

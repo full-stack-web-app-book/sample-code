@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Center, Container, Tabs } from "@chakra-ui/react";
 import { useTransactions } from "@/hooks/useTransactions";
-import { type Transaction } from "@/utils/transactionUtils";
 import { useNavigate } from "react-router-dom";
 import {
   TransactionForm,
@@ -9,20 +8,20 @@ import {
 } from "@/components/TransactionForm";
 
 const InputPage: React.FC = () => {
-  const { addTransaction } = useTransactions();
+  const { addTransaction, createTransactionData } = useTransactions();
   const [type, setType] = useState<"income" | "expense">("expense");
 
   const navigate = useNavigate();
 
   const handleFormSubmit = (data: TransactionFormData) => {
-    const newTransaction: Omit<Transaction, "id"> = {
+    const transactionData = createTransactionData(
       type,
-      item: data.item,
-      amount: Number(data.amount),
-      date: data.date,
-    };
+      data.item,
+      Number(data.amount),
+      data.date
+    );
 
-    addTransaction(newTransaction);
+    addTransaction(transactionData);
     navigate("/");
   };
 

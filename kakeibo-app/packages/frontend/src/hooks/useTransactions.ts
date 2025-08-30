@@ -10,8 +10,8 @@ interface TransactionList {
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useTransactions = () => {
-  const [incomeList, setIncomeList] = useState<TransactionList | null>(null);
-  const [expenseList, setExpenseList] = useState<TransactionList | null>(null);
+  const [incomeList, setIncomeList] = useState<TransactionList>();
+  const [expenseList, setExpenseList] = useState<TransactionList>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -72,7 +72,6 @@ export const useTransactions = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: transaction.type,
           item: transaction.item,
           amount: transaction.amount,
           date: transaction.date,
@@ -92,11 +91,30 @@ export const useTransactions = () => {
     }
   };
 
+  // 取引データを作成するヘルパー関数
+  const createTransactionData = (
+    type: "income" | "expense",
+    item: string,
+    amount: number,
+    date: string
+  ): Omit<Transaction, "id"> => {
+    // typeがincomeの場合はamountをそのまま、expenseの場合は負の数にする
+    const adjustedAmount =
+      type === "income" ? Math.abs(amount) : -Math.abs(amount);
+
+    return {
+      item,
+      amount: adjustedAmount,
+      date,
+    };
+  };
+
   return {
     incomeList,
     expenseList,
     isLoading,
     error,
     addTransaction,
+    createTransactionData,
   };
 };

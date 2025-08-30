@@ -28,7 +28,7 @@ src
 ├── components # React コンポーネント
 │   ├── BalanceSummary.tsx
 │   ├── TransactionForm.tsx
-│   └── TransactionHistory.tsx
+│   └── TransactionList.tsx
 ├── hooks # カスタムフック
 │   ├── useFinancialSummary.ts
 │   └── useTransactions.ts

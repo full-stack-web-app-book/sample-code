@@ -1,117 +1,88 @@
 import React, { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { formatTodayDate, type Transaction } from "../utils/transactionUtils";
-import { Center, Container } from "@chakra-ui/react";
+import { VStack, Input, Button, Field, HStack } from "@chakra-ui/react";
+import { formatTodayDate } from "@/utils/transactionUtils";
 
-interface TransactionFormProps {
-  onAddTransaction: (transaction: Omit<Transaction, "id">) => void;
+export interface TransactionFormData {
+  item: string;
+  amount: string;
+  date: string;
 }
 
-const TransactionForm: React.FC<TransactionFormProps> = ({
-  onAddTransaction,
+interface TransactionFormProps {
+  onSubmit: (data: TransactionFormData) => void;
+  onCancel?: () => void;
+}
+
+export const TransactionForm: React.FC<TransactionFormProps> = ({
+  onSubmit,
+  onCancel,
 }) => {
-  const navigate = useNavigate();
-  const [type, setType] = useState<"income" | "expense">("expense");
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(formatTodayDate());
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
-    const newTransaction: Omit<Transaction, "id"> = {
-      type,
-      item,
-      amount: Number(amount),
-      date,
-    };
-
-    onAddTransaction(newTransaction);
-    navigate("/");
+    onSubmit({ item, amount, date });
+    // フォームをリセット
+    setItem("");
+    setAmount("");
+    setDate(formatTodayDate());
   };
-
   return (
-    <Center>
-      <Container maxW="4xl">
-        <h1>取引の登録</h1>
+    <VStack maxW="4xl" width="full" gap={4} as="form" onSubmit={handleSubmit}>
+      <Field.Root required>
+        <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
+          項目
+        </Field.Label>
+        <Input
+          placeholder="項目を入力してください"
+          value={item}
+          onChange={(e) => setItem(e.target.value)}
+          required
+        />
+      </Field.Root>
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>種類：</label>
-            <div className="radio-group">
-              <label>
-                <input
-                  type="radio"
-                  value="expense"
-                  checked={type === "expense"}
-                  onChange={() => setType("expense")}
-                />
-                支出
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="income"
-                  checked={type === "income"}
-                  onChange={() => setType("income")}
-                />
-                収入
-              </label>
-            </div>
-          </div>
+      <Field.Root required>
+        <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
+          金額
+        </Field.Label>
+        <Input
+          type="number"
+          placeholder="金額を入力してください"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          min="0"
+          required
+        />
+      </Field.Root>
 
-          <div className="form-group">
-            <label htmlFor="item">項目：</label>
-            <input
-              type="text"
-              id="item"
-              value={item}
-              onChange={(e) => setItem(e.target.value)}
-              placeholder="例：給料、食費、交通費など"
-              required
-            />
-          </div>
+      <Field.Root required>
+        <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
+          日付
+        </Field.Label>
+        <Input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          required
+        />
+      </Field.Root>
 
-          <div className="form-group">
-            <label htmlFor="amount">金額（円）：</label>
-            <input
-              type="number"
-              id="amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              min="1"
-              placeholder="例：10000"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="date">日付：</label>
-            <input
-              type="date"
-              id="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="button-container">
-            <button type="submit" className="add-button">
-              登録する
-            </button>
-            <button
-              type="button"
-              className="cancel-button"
-              onClick={() => navigate("/")}
-            >
-              キャンセル
-            </button>
-          </div>
-        </form>
-      </Container>
-    </Center>
+      <HStack width="sm" mt={4} gap={3}>
+        <Button
+          type="button"
+          colorPalette="gray"
+          variant="outline"
+          flex={1}
+          onClick={onCancel}
+        >
+          キャンセル
+        </Button>
+        <Button type="submit" colorPalette="teal" flex={1} fontWeight="bold">
+          登録
+        </Button>
+      </HStack>
+    </VStack>
   );
 };
-
-export default TransactionForm;

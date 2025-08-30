@@ -1,85 +1,138 @@
 import React from "react";
 import { formatAmount } from "../utils/transactionUtils";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Text,
+  Flex,
+  Separator,
+  Stack,
+  Skeleton,
+  SkeletonText,
+} from "@chakra-ui/react";
+import { Chart, useChart } from "@chakra-ui/charts";
+import { BarChart, Bar, YAxis, CartesianGrid, Cell, LabelList } from "recharts";
+import SummaryCard from "./SummaryCard";
+import { useFinancialSummary } from "@/hooks/useFinancialSummary";
 
-interface BalanceSummaryProps {
-  totalIncome: number;
-  totalExpense: number;
-  balance: number;
-  isLoading?: boolean;
-}
-
-const BalanceSummary: React.FC<BalanceSummaryProps> = ({
-  totalIncome,
-  totalExpense,
-  balance,
-  isLoading = false,
-}) => {
-  if (isLoading) {
-    return (
-      <SummaryContainer>
-        <Text>データを取得中...</Text>
-      </SummaryContainer>
-    );
-  }
-
+const BalanceSummary: React.FC = () => {
   return (
-    <SummaryContainer>
-      <BalanceSummaryItem
-        title="収入合計"
-        amount={totalIncome}
-        color="green.500"
-      />
-      <BalanceSummaryItem
-        title="支出合計"
-        amount={totalExpense}
-        color="red.500"
-      />
-      <BalanceSummaryItem title="残高" amount={balance} color={"blue.500"} />
-    </SummaryContainer>
+    <SummaryCard title="収支サマリー" minH="sm">
+      <BalanceSummaryContent />
+    </SummaryCard>
   );
 };
 
-const SummaryContainer: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const BalanceSummaryContent: React.FC = () => {
   return (
-    <Box
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        marginBottom: "30px",
-        flexWrap: "wrap",
-        gap: "10px",
-      }}
-    >
-      {children}
-    </Box>
+    <Flex gap={6}>
+      <Box flex={1}>
+        <BalanceGraph />
+      </Box>
+      <Box flex={1}>
+        <BalanceTotal />
+      </Box>
+    </Flex>
   );
 };
 
-const BalanceSummaryItem: React.FC<{
+const BalanceGraph: React.FC = () => {
+  const { data, isLoading, error } = useFinancialSummary();
+
+  const chartData = [
+    {
+      name: "収入",
+      amount: data?.totalIncome,
+    },
+    {
+      name: "支出",
+      amount: data?.totalExpense,
+    },
+  ];
+
+  const chart = useChart({
+    data: chartData,
+    series: [{ name: "amount", color: "teal.solid" }],
+  });
+
+  return (
+    <>
+      {isLoading ? (
+        <Skeleton height="200px" borderRadius="6px" />
+      ) : error ? (
+        <Text color="red.500">データの取得に失敗しました</Text>
+      ) : (
+        <Chart.Root maxH="sm" chart={chart}>
+          <BarChart data={chart.data}>
+            <CartesianGrid
+              stroke={chart.color("border.muted")}
+              vertical={false}
+            />
+            <YAxis tickFormatter={(value) => formatAmount(Number(value))} />
+            {chart.series.map((item, index) => (
+              <Bar
+                key={index}
+                radius={4}
+                dataKey={chart.key(item.name)}
+                fill={chart.color(item.color)}
+              >
+                <LabelList dataKey={chart.key("amount")} position="top" />
+                {chart.data.map((item, index) => (
+                  <Cell
+                    key={index}
+                    fill={chart.color(
+                      item.amount > 0 ? "green.500" : "red.500"
+                    )}
+                  />
+                ))}
+              </Bar>
+            ))}
+          </BarChart>
+        </Chart.Root>
+      )}
+    </>
+  );
+};
+
+const BalanceTotal: React.FC = () => {
+  const { data, isLoading, error } = useFinancialSummary();
+  return (
+    <>
+      {isLoading ? (
+        <SkeletonText />
+      ) : error ? (
+        <Text color="red.500">データの取得に失敗しました</Text>
+      ) : (
+        <Stack gap={2}>
+          <BalanceItem title="収入" amount={data?.totalIncome} />
+          <BalanceItem title="支出" amount={data?.totalExpense} />
+          <Separator size="sm" />
+          <BalanceItem title="収支" amount={data?.balance} />
+        </Stack>
+      )}
+    </>
+  );
+};
+
+const BalanceItem: React.FC<{
   title: string;
   amount: number;
-  color?: string;
-}> = ({ title, amount, color }) => {
+}> = ({ title, amount }) => {
+  const textColor = amount >= 0 ? "green.500" : "red.500";
+
   return (
-    <Box
-      style={{
-        flex: 1,
-        backgroundColor: "white",
-        padding: "15px",
-        borderRadius: "8px",
-        boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-        textAlign: "center",
-        minWidth: "150px",
-      }}
+    <Flex
+      width="100%"
+      p={4}
+      borderRadius="6px"
+      justifyContent="space-between"
+      alignItems="center"
     >
       <Heading size="sm">{title}</Heading>
-      <Text textStyle="3xl" fontWeight="bold" color={color}>
+      <Text fontSize="2xl" fontWeight="bold" color={textColor}>
         {formatAmount(amount)}
       </Text>
-    </Box>
+    </Flex>
   );
 };
 

@@ -1,0 +1,46 @@
+/* 共通スタイル */
+body {
+  background-color: #F0F0F0;
+}
+/* ヘッダー */
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 24px;
+}
+
+.menu-list {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+}
+
+.menu-list-item a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* メインコンテンツ */
+/* 横幅は最大1200pxに設定し、左右中央寄せ */
+main {
+  color: #333;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 32px 0;
+}
+
+.page-title {
+  font-size: 24px;
+  text-align: center;
+}
+

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ress@5.0.2/dist/ress.min.css">
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="index.css">
+  <title>シンプル家計簿</title>
+</head>
+<body>
+  <header>
+    <h1>シンプル家計簿</h1>
+    <nav>
+      <ul class="menu-list">
+        <li class="menu-list-item"><a href="index.html">ホーム</a></li>
+        <li class="menu-list-item"><a href="input.html">収支登録</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2 class="page-title">収支確認ページ</h2>
+    <section class="summary">
+      <div class="summary-box income">
+        <h3>収入</h3>
+        <p>15,000円</p>
+      </div>
+      <div class="summary-box expense">
+        <h3>支出</h3>
+        <p>5,000円</p>
+      </div>
+      <div class="summary-box balance">
+        <h3>残高</h3>
+        <p>10,000円</p>
+      </div>
+    </section>
+
+    <section class="action">
+      <a href="input.html" class="register-button">収支を登録する</a>
+    </section>
+    
+    <section class="history">
+      <div class="history-box">
+        <h3 class="history-box-title">収入履歴</h3>
+        <div class="history-item">
+          <div class="history-item-info">
+            <p class="history-item-name">給与</p>
+            <p class="history-item-date">2025年07月30日</p>
+          </div>
+          <p class="history-item-amount income">10,000円</p>
+        </div>
+        <div class="history-item">
+          <div class="history-item-info">
+            <p class="history-item-name">副業収入</p>
+            <p class="history-item-date">2025年07月25日</p>
+          </div>
+          <p class="history-item-amount income">5,000円</p>
+        </div>
+      </div>
+      <div class="history-box">
+        <h3 class="history-box-title">支出履歴</h3>
+        <div class="history-item">
+          <div class="history-item-info">
+            <p class="history-item-name">食費</p>
+            <p class="history-item-date">2025年08月30日</p>
+          </div>
+          <p class="history-item-amount expense">3,000円</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,90 @@
+/* サマリー */
+.summary {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 16px;
+}
+
+.summary-box {
+  width: 100%;
+  background-color: #FFFFFF;
+  text-align: center;
+  border-radius: 8px;
+  padding: 16px 0;
+}
+
+.summary-box h3 {
+  font-size: 24px;
+}
+
+
+.income {
+  color: #27ae60;
+}
+
+.expense {
+  color: #e74c3c;
+}
+
+.balance {
+  color: #3498db;
+}
+
+
+/* アクション */
+
+.action {
+  text-align: center;
+}
+
+.register-button {
+  background-color: #3498db;
+  text-decoration: none;
+  color: #ffffff;
+  padding: 16px 32px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+/* 履歴 */
+.history {
+  display: flex;
+  gap: 32px; 
+}
+
+.history-box {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 8px;
+  min-height: 400px;
+  padding: 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap :16px;
+}
+
+.history-box-title {
+  font-size: 24px;
+  text-align: center;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-item-name {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.history-item-date {
+  color: #888888;
+}
+
+.history-item-amount {
+  font-weight: 700;
+  font-size: 20px;
+}

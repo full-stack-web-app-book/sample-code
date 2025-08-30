@@ -1,0 +1,45 @@
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-text-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.form-text-input {
+  width: 100%;
+  background: #FFFFFF;
+  padding: 8px 16px;
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.action-button {
+  color: #ffffff;
+  padding: 16px 32px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.submit {
+  background-color: #3498db;
+}
+
+.cancel {
+  background-color: #95a5a6;
+}

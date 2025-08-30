@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ress@5.0.2/dist/ress.min.css">
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="input.css">
+  <title>シンプル家計簿</title>
+</head>
+<body>
+  <header>
+    <h1>シンプル家計簿</h1>
+    <nav>
+      <ul class="menu-list">
+        <li class="menu-list-item"><a href="index.html">ホーム</a></li>
+        <li class="menu-list-item"><a href="input.html">収支登録</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2 class="page-title">収支登録ページ</h2>
+    <form>
+      <div class="form-item">
+        <input id="income" type="radio" name="type" value="income"><label for="income">収入</label>
+        <input id="expense" type="radio" name="type" value="expense"><label for="expense">支出</label>
+      </div>
+      <div class="form-item">
+        <label class="form-text-label" for="item-name">項目名</label>
+        <input class="form-text-input" type="text" name="item-name" id="item-name" placeholder="項目名を入力">
+      </div>
+      <div class="form-item">
+        <label class="form-text-label" for="amount">金額</label>
+        <input class="form-text-input" type="number" name="amount" id="amount" placeholder="金額を入力">
+      </div>
+      <div class="form-item">
+        <label class="form-text-label" for="date">日付</label>
+        <input class="form-text-input" type="date" name="date" id="date">
+      </div>
+    </form>
+    <div class="action">
+      <button class="action-button submit">登録する</button>
+      <button class="action-button cancel">キャンセル</button>
+    </div>
+  </main>
+</body>
+</html>

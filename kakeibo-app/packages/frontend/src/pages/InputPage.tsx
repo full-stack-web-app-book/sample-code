@@ -1,5 +1,13 @@
 import React, { useState, type FormEvent } from "react";
-import { Center, Container } from "@chakra-ui/react";
+import {
+  Center,
+  Container,
+  Tabs,
+  VStack,
+  Input,
+  Button,
+  Field,
+} from "@chakra-ui/react";
 import { useTransactions } from "@/hooks/useTransactions";
 import { formatTodayDate, type Transaction } from "@/utils/transactionUtils";
 import { useNavigate } from "react-router-dom";
@@ -27,87 +35,130 @@ const InputPage: React.FC = () => {
     navigate("/");
   };
 
+  const handleTabChange = (value: string) => {
+    setType(value as "income" | "expense");
+  };
+
   return (
-    <Center>
-      <Container maxW="4xl" py={6}>
-        <h1>取引の登録</h1>
-
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>種類：</label>
-            <div className="radio-group">
-              <label>
-                <input
-                  type="radio"
-                  value="expense"
-                  checked={type === "expense"}
-                  onChange={() => setType("expense")}
-                />
-                支出
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="income"
-                  checked={type === "income"}
-                  onChange={() => setType("income")}
-                />
-                収入
-              </label>
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="item">項目：</label>
-            <input
-              type="text"
-              id="item"
-              value={item}
-              onChange={(e) => setItem(e.target.value)}
-              placeholder="例：給料、食費、交通費など"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="amount">金額（円）：</label>
-            <input
-              type="number"
-              id="amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              min="1"
-              placeholder="例：10000"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="date">日付：</label>
-            <input
-              type="date"
-              id="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="button-container">
-            <button type="submit" className="add-button">
-              登録する
-            </button>
-            <button
-              type="button"
-              className="cancel-button"
-              onClick={() => navigate("/")}
+    <Container maxW="4xl" py={6}>
+      <Center>
+        <Tabs.Root
+          defaultValue="expense"
+          variant="plain"
+          onValueChange={({ value }) => handleTabChange(value)}
+          width="full"
+          maxW="xl"
+        >
+          <Tabs.List bg="bg.muted" rounded="lg" mb="4">
+            <Tabs.Trigger value="expense">支出</Tabs.Trigger>
+            <Tabs.Trigger value="income">収入</Tabs.Trigger>
+            <Tabs.Indicator rounded="l2" />
+          </Tabs.List>
+          <Tabs.Content value="expense">
+            <VStack
+              maxW="4xl"
+              width="full"
+              gap={4}
+              as="form"
+              onSubmit={handleSubmit}
             >
-              キャンセル
-            </button>
-          </div>
-        </form>
-      </Container>
-    </Center>
+              <Field.Root required>
+                <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
+                  項目
+                </Field.Label>
+                <Input
+                  placeholder="項目を入力してください"
+                  value={item}
+                  onChange={(e) => setItem(e.target.value)}
+                  required
+                />
+              </Field.Root>
+
+              <Field.Root required>
+                <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
+                  金額
+                </Field.Label>
+                <Input
+                  type="number"
+                  placeholder="金額を入力してください"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  min="0"
+                  required
+                />
+              </Field.Root>
+
+              <Field.Root required>
+                <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
+                  日付
+                </Field.Label>
+                <Input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  required
+                />
+              </Field.Root>
+
+              <Button type="submit" colorPalette="cyan" width="sm" mt={4}>
+                登録
+              </Button>
+            </VStack>
+          </Tabs.Content>
+          <Tabs.Content value="income">
+            <VStack
+              maxW="4xl"
+              width="full"
+              gap={4}
+              as="form"
+              onSubmit={handleSubmit}
+            >
+              <Field.Root required>
+                <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
+                  項目
+                </Field.Label>
+                <Input
+                  placeholder="項目を入力してください"
+                  value={item}
+                  onChange={(e) => setItem(e.target.value)}
+                  required
+                />
+              </Field.Root>
+
+              <Field.Root required>
+                <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
+                  金額
+                </Field.Label>
+                <Input
+                  type="number"
+                  placeholder="金額を入力してください"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  min="0"
+                  required
+                />
+              </Field.Root>
+
+              <Field.Root required>
+                <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
+                  日付
+                </Field.Label>
+                <Input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  required
+                />
+              </Field.Root>
+
+              <Button type="submit" colorPalette="cyan" width="sm" mt={4}>
+                登録
+              </Button>
+            </VStack>
+          </Tabs.Content>
+        </Tabs.Root>
+      </Center>
+    </Container>
   );
 };
 

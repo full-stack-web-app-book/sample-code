@@ -4,15 +4,15 @@ body {
 }
 /* ヘッダー */
 header {
-  background-color: #333;
-  color: #fff;
+  background-color: #333333;
+  color: #FFFFFF;
   padding: 16px 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-header h1 {
+.header-title {
   font-size: 24px;
 }
 
@@ -23,14 +23,14 @@ header h1 {
 }
 
 .menu-list-item a {
-  color: #fff;
+  color: #FFFFFF;
   text-decoration: none;
 }
 
 /* メインコンテンツ */
 /* 横幅は最大1200pxに設定し、左右中央寄せ */
 main {
-  color: #333;
+  color: #333333;
   max-width: 1200px;
   margin: 0 auto;
   display: flex;

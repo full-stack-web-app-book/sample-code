@@ -1,7 +1,7 @@
 /* サマリー */
 .summary {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   gap: 16px;
 }
@@ -20,17 +20,16 @@
 
 
 .income {
-  color: #27ae60;
+  color: #27AE60;
 }
 
 .expense {
-  color: #e74c3c;
+  color: #E74C3C;
 }
 
 .balance {
-  color: #3498db;
+  color: #3498DB;
 }
-
 
 /* アクション */
 

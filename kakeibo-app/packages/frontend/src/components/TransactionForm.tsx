@@ -66,10 +66,11 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
       <HStack width="sm" mt={4} gap={3}>
         <Button
           type="button"
-          colorPalette="gray"
+          color="gray.500"
           variant="outline"
           flex={1}
           onClick={onCancel}
+          fontWeight="bold"
         >
           キャンセル
         </Button>

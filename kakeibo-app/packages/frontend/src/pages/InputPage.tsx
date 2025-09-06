@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Center, Container, Tabs } from "@chakra-ui/react";
+import { Center, Container, Tabs, Text } from "@chakra-ui/react";
 import { useTransactions } from "@/hooks/useTransactions";
 import { useNavigate } from "react-router-dom";
 import {
@@ -52,19 +52,19 @@ const InputPage: React.FC = () => {
           >
             <Tabs.Trigger
               value="income"
-              _selected={{ color: "white", fontWeight: "bold" }}
+              _selected={{ color: "white" }}
               width="30%"
               justifyContent="center"
             >
-              収入
+              <Text fontWeight="bold">収入</Text>
             </Tabs.Trigger>
             <Tabs.Trigger
               value="expense"
-              _selected={{ color: "white", fontWeight: "bold" }}
+              _selected={{ color: "white" }}
               width="30%"
               justifyContent="center"
             >
-              支出
+              <Text fontWeight="bold">支出</Text>
             </Tabs.Trigger>
             <Tabs.Indicator
               rounded="l2"

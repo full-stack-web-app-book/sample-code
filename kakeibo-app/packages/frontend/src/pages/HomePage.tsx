@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import BalanceSummary from "@/components/BalanceSummary";
 import TransactionList from "@/components/TransactionList";
 import { useTransactions } from "@/hooks/useTransactions";
-import { Box, Container, Flex, Stack } from "@chakra-ui/react";
+import { Container, Flex, Stack } from "@chakra-ui/react";
 import InputButton from "@/components/InputButton";
 import SummaryCard from "@/components/SummaryCard";
 import Header from "@/components/Header";
@@ -31,24 +31,20 @@ const TransactionHistory: React.FC = () => {
 
   return (
     <Flex gap={6}>
-      <Box flex={1}>
-        <SummaryCard title="収入履歴">
-          <TransactionList
-            transactions={incomeList?.transactions}
-            isLoading={isLoading}
-            error={error}
-          />
-        </SummaryCard>
-      </Box>
-      <Box flex={1}>
-        <SummaryCard title="支出履歴">
-          <TransactionList
-            transactions={expenseList?.transactions}
-            isLoading={isLoading}
-            error={error}
-          />
-        </SummaryCard>
-      </Box>
+      <SummaryCard title="収入履歴" flex={1}>
+        <TransactionList
+          transactions={incomeList?.transactions}
+          isLoading={isLoading}
+          error={error}
+        />
+      </SummaryCard>
+      <SummaryCard title="支出履歴" flex={1}>
+        <TransactionList
+          transactions={expenseList?.transactions}
+          isLoading={isLoading}
+          error={error}
+        />
+      </SummaryCard>
     </Flex>
   );
 };

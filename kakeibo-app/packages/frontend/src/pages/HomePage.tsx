@@ -1,12 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import BalanceSummary from "@/components/BalanceSummary";
-import TransactionList from "@/components/TransactionList";
-import { useTransactions } from "@/hooks/useTransactions";
 import { Container, Flex, Stack } from "@chakra-ui/react";
 import InputButton from "@/components/InputButton";
-import SummaryCard from "@/components/SummaryCard";
 import Header from "@/components/Header";
+import TransactionSummary from "@/components/TransactionSummary";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -19,33 +17,10 @@ const HomePage: React.FC = () => {
             <InputButton onClick={() => navigate("/input")} />
           </Flex>
           <BalanceSummary />
-          <TransactionHistory />
+          <TransactionSummary maxTransactions={5} />
         </Stack>
       </Container>
     </>
-  );
-};
-
-const TransactionHistory: React.FC = () => {
-  const { incomeList, expenseList, isLoading, error } = useTransactions();
-
-  return (
-    <Flex gap={6}>
-      <SummaryCard title="収入履歴" flex={1}>
-        <TransactionList
-          transactions={incomeList?.transactions}
-          isLoading={isLoading}
-          error={error}
-        />
-      </SummaryCard>
-      <SummaryCard title="支出履歴" flex={1}>
-        <TransactionList
-          transactions={expenseList?.transactions}
-          isLoading={isLoading}
-          error={error}
-        />
-      </SummaryCard>
-    </Flex>
   );
 };
 

@@ -6,19 +6,23 @@ import { useTransactions } from "@/hooks/useTransactions";
 import { Box, Container, Flex, Stack } from "@chakra-ui/react";
 import InputButton from "@/components/InputButton";
 import SummaryCard from "@/components/SummaryCard";
+import Header from "@/components/Header";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   return (
-    <Container as="main" maxW="4xl" py={6}>
-      <Stack gap={6}>
-        <Flex justifyContent="flex-end">
-          <InputButton onClick={() => navigate("/input")} />
-        </Flex>
-        <BalanceSummary />
-        <TransactionHistory />
-      </Stack>
-    </Container>
+    <>
+      <Header />
+      <Container as="main" maxW="4xl" py={6}>
+        <Stack gap={6}>
+          <Flex justifyContent="flex-end">
+            <InputButton onClick={() => navigate("/input")} />
+          </Flex>
+          <BalanceSummary />
+          <TransactionHistory />
+        </Stack>
+      </Container>
+    </>
   );
 };
 

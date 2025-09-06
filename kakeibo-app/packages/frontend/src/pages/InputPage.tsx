@@ -6,6 +6,7 @@ import {
   TransactionForm,
   type TransactionFormData,
 } from "@/components/TransactionForm";
+import Header from "@/components/Header";
 
 const InputPage: React.FC = () => {
   const { addTransaction, createTransactionData } = useTransactions();
@@ -34,58 +35,61 @@ const InputPage: React.FC = () => {
   };
 
   return (
-    <Container as="main" maxW="4xl" py={6}>
-      <Center>
-        <Tabs.Root
-          defaultValue="expense"
-          variant="plain"
-          onValueChange={({ value }) => handleTabChange(value)}
-          width="full"
-          maxW="xl"
-        >
-          <Tabs.List
-            bg="bg.muted"
-            rounded="lg"
-            mb="4"
-            justifyContent="center"
-            width="100%"
+    <>
+      <Header />
+      <Container as="main" maxW="4xl" py={6}>
+        <Center>
+          <Tabs.Root
+            defaultValue="expense"
+            variant="plain"
+            onValueChange={({ value }) => handleTabChange(value)}
+            width="full"
+            maxW="xl"
           >
-            <Tabs.Trigger
-              value="income"
-              _selected={{ color: "white" }}
-              width="30%"
+            <Tabs.List
+              bg="bg.muted"
+              rounded="lg"
+              mb="4"
               justifyContent="center"
+              width="100%"
             >
-              <Text fontWeight="bold">収入</Text>
-            </Tabs.Trigger>
-            <Tabs.Trigger
-              value="expense"
-              _selected={{ color: "white" }}
-              width="30%"
-              justifyContent="center"
-            >
-              <Text fontWeight="bold">支出</Text>
-            </Tabs.Trigger>
-            <Tabs.Indicator
-              rounded="l2"
-              bg={type === "expense" ? "red.500" : "green.500"}
-            />
-          </Tabs.List>
-          <Tabs.Content value="expense">
-            <TransactionForm
-              onSubmit={handleFormSubmit}
-              onCancel={handleCancel}
-            />
-          </Tabs.Content>
-          <Tabs.Content value="income">
-            <TransactionForm
-              onSubmit={handleFormSubmit}
-              onCancel={handleCancel}
-            />
-          </Tabs.Content>
-        </Tabs.Root>
-      </Center>
-    </Container>
+              <Tabs.Trigger
+                value="income"
+                _selected={{ color: "white" }}
+                width="30%"
+                justifyContent="center"
+              >
+                <Text fontWeight="bold">収入</Text>
+              </Tabs.Trigger>
+              <Tabs.Trigger
+                value="expense"
+                _selected={{ color: "white" }}
+                width="30%"
+                justifyContent="center"
+              >
+                <Text fontWeight="bold">支出</Text>
+              </Tabs.Trigger>
+              <Tabs.Indicator
+                rounded="l2"
+                bg={type === "expense" ? "red.500" : "green.500"}
+              />
+            </Tabs.List>
+            <Tabs.Content value="expense">
+              <TransactionForm
+                onSubmit={handleFormSubmit}
+                onCancel={handleCancel}
+              />
+            </Tabs.Content>
+            <Tabs.Content value="income">
+              <TransactionForm
+                onSubmit={handleFormSubmit}
+                onCancel={handleCancel}
+              />
+            </Tabs.Content>
+          </Tabs.Root>
+        </Center>
+      </Container>
+    </>
   );
 };
 

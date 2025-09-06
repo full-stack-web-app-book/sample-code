@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Center, Container, Tabs, Text } from "@chakra-ui/react";
-import { useTransactions } from "@/hooks/useTransactions";
+import { useAddTransactions } from "@/hooks/useAddTransactions";
 import { useNavigate } from "react-router-dom";
 import {
   TransactionForm,
@@ -9,7 +9,7 @@ import {
 import Header from "@/components/Header";
 
 const InputPage: React.FC = () => {
-  const { addTransaction, createTransactionData } = useTransactions();
+  const { addTransaction, createTransactionData } = useAddTransactions();
   const [type, setType] = useState<"income" | "expense">("expense");
 
   const navigate = useNavigate();

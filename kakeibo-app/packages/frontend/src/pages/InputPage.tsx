@@ -34,7 +34,7 @@ const InputPage: React.FC = () => {
   };
 
   return (
-    <Container maxW="4xl" py={6}>
+    <Container as="main" maxW="4xl" py={6}>
       <Center>
         <Tabs.Root
           defaultValue="expense"

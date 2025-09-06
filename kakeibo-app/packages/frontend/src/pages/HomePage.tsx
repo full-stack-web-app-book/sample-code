@@ -10,7 +10,7 @@ import SummaryCard from "@/components/SummaryCard";
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   return (
-    <Container maxW="4xl" py={6}>
+    <Container as="main" maxW="4xl" py={6}>
       <Stack gap={4}>
         <Flex justifyContent="flex-end">
           <InputButton onClick={() => navigate("/input")} />

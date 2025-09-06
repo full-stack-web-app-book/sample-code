@@ -32,9 +32,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
   return (
     <VStack maxW="4xl" width="full" gap={4} as="form" onSubmit={handleSubmit}>
       <Field.Root required>
-        <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
-          項目
-        </Field.Label>
+        <Field.Label>項目</Field.Label>
         <Input
           placeholder="項目を入力してください"
           value={item}
@@ -44,9 +42,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
       </Field.Root>
 
       <Field.Root required>
-        <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
-          金額
-        </Field.Label>
+        <Field.Label>金額</Field.Label>
         <Input
           type="number"
           placeholder="金額を入力してください"
@@ -58,9 +54,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
       </Field.Root>
 
       <Field.Root required>
-        <Field.Label fontSize="14px" fontWeight="500" lineHeight="1.2">
-          日付
-        </Field.Label>
+        <Field.Label>日付</Field.Label>
         <Input
           type="date"
           value={date}
@@ -72,10 +66,11 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
       <HStack width="sm" mt={4} gap={3}>
         <Button
           type="button"
-          colorPalette="gray"
+          color="gray.500"
           variant="outline"
           flex={1}
           onClick={onCancel}
+          fontWeight="bold"
         >
           キャンセル
         </Button>

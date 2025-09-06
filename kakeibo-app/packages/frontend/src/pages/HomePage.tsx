@@ -3,16 +3,18 @@ import { useNavigate } from "react-router-dom";
 import BalanceSummary from "@/components/BalanceSummary";
 import TransactionList from "@/components/TransactionList";
 import { useTransactions } from "@/hooks/useTransactions";
-import { Box, Center, Container, Flex, Stack } from "@chakra-ui/react";
+import { Box, Container, Flex, Stack } from "@chakra-ui/react";
 import InputButton from "@/components/InputButton";
 import SummaryCard from "@/components/SummaryCard";
+import Header from "@/components/Header";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   return (
-    <Center>
-      <Container maxW="4xl" py={6}>
-        <Stack gap={4}>
+    <>
+      <Header />
+      <Container as="main" maxW="4xl" py={6}>
+        <Stack gap={6}>
           <Flex justifyContent="flex-end">
             <InputButton onClick={() => navigate("/input")} />
           </Flex>
@@ -20,7 +22,7 @@ const HomePage: React.FC = () => {
           <TransactionHistory />
         </Stack>
       </Container>
-    </Center>
+    </>
   );
 };
 

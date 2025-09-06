@@ -1,4 +1,5 @@
-import { Box, Button, Container, Text } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Text } from "@chakra-ui/react";
+import { FaPlus } from "react-icons/fa";
 
 function App() {
   return (
@@ -16,9 +17,12 @@ function App() {
         </Text>
       </Box>
       <Container as="main" maxW="4xl" py={6}>
-        <Button colorPalette="teal" fontWeight="bold">
-          登録
-        </Button>
+        <Flex justifyContent="flex-end">
+          <Button colorPalette="teal" fontWeight="bold">
+            <FaPlus />
+            登録
+          </Button>
+        </Flex>
       </Container>
     </>
   );

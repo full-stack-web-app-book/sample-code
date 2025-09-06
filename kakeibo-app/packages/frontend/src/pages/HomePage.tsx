@@ -11,7 +11,7 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
   return (
     <Container as="main" maxW="4xl" py={6}>
-      <Stack gap={4}>
+      <Stack gap={6}>
         <Flex justifyContent="flex-end">
           <InputButton onClick={() => navigate("/input")} />
         </Flex>

@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Box } from "@chakra-ui/react";
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
 import InputPage from "./pages/InputPage";
@@ -7,13 +6,11 @@ import InputPage from "./pages/InputPage";
 function App() {
   return (
     <Router>
-      <Box minH="100vh">
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/input" element={<InputPage />} />
-        </Routes>
-      </Box>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/input" element={<InputPage />} />
+      </Routes>
     </Router>
   );
 }

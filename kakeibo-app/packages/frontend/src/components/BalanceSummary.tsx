@@ -12,18 +12,9 @@ import {
 } from "@chakra-ui/react";
 import { Chart, useChart } from "@chakra-ui/charts";
 import { BarChart, Bar, YAxis, CartesianGrid, Cell, LabelList } from "recharts";
-import SummaryCard from "./SummaryCard";
 import { useFinancialSummary } from "@/hooks/useFinancialSummary";
 
 const BalanceSummary: React.FC = () => {
-  return (
-    <SummaryCard title="収支サマリー" minH="sm">
-      <BalanceSummaryContent />
-    </SummaryCard>
-  );
-};
-
-const BalanceSummaryContent: React.FC = () => {
   return (
     <Flex gap={6}>
       <Box flex={1}>

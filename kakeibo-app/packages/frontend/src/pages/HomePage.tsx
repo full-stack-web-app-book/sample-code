@@ -21,7 +21,9 @@ const HomePage: React.FC = () => {
           <Flex justifyContent="flex-end">
             <InputButton onClick={() => navigate("/input")} />
           </Flex>
-          <BalanceSummary />
+          <SummaryCard title="収支サマリー">
+            <BalanceSummary />
+          </SummaryCard>
           <Flex gap={6}>
             <SummaryCard title="収入履歴" flex={1}>
               <IncomeTransactionSummary maxTransactions={maxTransactions} />

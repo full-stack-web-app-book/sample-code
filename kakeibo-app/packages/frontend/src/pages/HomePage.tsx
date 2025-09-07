@@ -4,10 +4,15 @@ import BalanceSummary from "@/components/BalanceSummary";
 import { Container, Flex, Stack } from "@chakra-ui/react";
 import InputButton from "@/components/InputButton";
 import Header from "@/components/Header";
-import TransactionSummary from "@/components/TransactionSummary";
+import {
+  ExpenseTransactionSummary,
+  IncomeTransactionSummary,
+} from "@/components/TransactionSummary";
+import SummaryCard from "@/components/SummaryCard";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
+  const maxTransactions = 5;
   return (
     <>
       <Header />
@@ -17,7 +22,14 @@ const HomePage: React.FC = () => {
             <InputButton onClick={() => navigate("/input")} />
           </Flex>
           <BalanceSummary />
-          <TransactionSummary maxTransactions={5} />
+          <Flex gap={6}>
+            <SummaryCard title="収入履歴" flex={1}>
+              <IncomeTransactionSummary maxTransactions={maxTransactions} />
+            </SummaryCard>
+            <SummaryCard title="支出履歴" flex={1}>
+              <ExpenseTransactionSummary maxTransactions={maxTransactions} />
+            </SummaryCard>
+          </Flex>
         </Stack>
       </Container>
     </>

@@ -1,36 +1,38 @@
-import { useTransactions } from "@/hooks/useTransactions";
-import SummaryCard from "@/components/SummaryCard";
-import { Flex } from "@chakra-ui/react";
+import { useExpenseTransactions } from "@/hooks/useExpenseTransactions";
 import TransactionList from "./TransactionList";
+import { useIncomeTransactions } from "@/hooks/useIncomeTransactions";
+import type React from "react";
 
-const TransactionSummary: React.FC<{ maxTransactions: number }> = ({
-  maxTransactions,
-}) => {
-  const { incomeList, expenseList, isLoading, error } = useTransactions();
+export const IncomeTransactionSummary: React.FC<{
+  maxTransactions: number;
+}> = ({ maxTransactions }) => {
+  const { transactionList, isLoading, error } = useIncomeTransactions();
 
-  const incomeTransactions =
-    incomeList?.transactions?.slice(0, maxTransactions) || [];
-  const expenseTransactions =
-    expenseList?.transactions?.slice(0, maxTransactions) || [];
+  const transactions =
+    transactionList?.transactions?.slice(0, maxTransactions) || [];
 
   return (
-    <Flex gap={6}>
-      <SummaryCard title="収入履歴" flex={1}>
-        <TransactionList
-          transactions={incomeTransactions}
-          isLoading={isLoading}
-          error={error}
-        />
-      </SummaryCard>
-      <SummaryCard title="支出履歴" flex={1}>
-        <TransactionList
-          transactions={expenseTransactions}
-          isLoading={isLoading}
-          error={error}
-        />
-      </SummaryCard>
-    </Flex>
+    <TransactionList
+      transactions={transactions}
+      isLoading={isLoading}
+      error={error}
+    />
   );
 };
 
-export default TransactionSummary;
+export const ExpenseTransactionSummary: React.FC<{
+  maxTransactions: number;
+}> = ({ maxTransactions }) => {
+  const { transactionList, isLoading, error } = useExpenseTransactions();
+
+  const transactions =
+    transactionList?.transactions?.slice(0, maxTransactions) || [];
+
+  return (
+    <TransactionList
+      transactions={transactions}
+      isLoading={isLoading}
+      error={error}
+    />
+  );
+};

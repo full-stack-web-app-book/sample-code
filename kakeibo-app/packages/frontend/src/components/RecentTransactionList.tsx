@@ -3,7 +3,7 @@ import TransactionList from "./TransactionList";
 import { useIncomeTransactions } from "@/hooks/useIncomeTransactions";
 import type React from "react";
 
-export const IncomeTransactionSummary: React.FC<{
+export const RecentIncomeTransactionList: React.FC<{
   maxTransactions: number;
 }> = ({ maxTransactions }) => {
   const { transactionList, isLoading, error } = useIncomeTransactions();
@@ -20,7 +20,7 @@ export const IncomeTransactionSummary: React.FC<{
   );
 };
 
-export const ExpenseTransactionSummary: React.FC<{
+export const RecentExpenseTransactionList: React.FC<{
   maxTransactions: number;
 }> = ({ maxTransactions }) => {
   const { transactionList, isLoading, error } = useExpenseTransactions();

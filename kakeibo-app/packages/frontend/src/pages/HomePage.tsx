@@ -5,9 +5,9 @@ import { Container, Flex, Stack } from "@chakra-ui/react";
 import InputButton from "@/components/InputButton";
 import Header from "@/components/Header";
 import {
-  ExpenseTransactionSummary,
-  IncomeTransactionSummary,
-} from "@/components/TransactionSummary";
+  RecentExpenseTransactionList,
+  RecentIncomeTransactionList,
+} from "@/components/RecentTransactionList";
 import SummaryCard from "@/components/SummaryCard";
 
 const HomePage: React.FC = () => {
@@ -26,10 +26,10 @@ const HomePage: React.FC = () => {
           </SummaryCard>
           <Flex gap={6}>
             <SummaryCard title="収入履歴" flex={1}>
-              <IncomeTransactionSummary maxTransactions={maxTransactions} />
+              <RecentIncomeTransactionList maxTransactions={maxTransactions} />
             </SummaryCard>
             <SummaryCard title="支出履歴" flex={1}>
-              <ExpenseTransactionSummary maxTransactions={maxTransactions} />
+              <RecentExpenseTransactionList maxTransactions={maxTransactions} />
             </SummaryCard>
           </Flex>
         </Stack>

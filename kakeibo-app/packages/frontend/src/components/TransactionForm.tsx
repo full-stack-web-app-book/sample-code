@@ -1,6 +1,6 @@
 import React, { useState, type FormEvent } from "react";
 import { VStack, Input, Button, Field, HStack } from "@chakra-ui/react";
-import { formatTodayDate } from "@/utils/formatter";
+import { getToday } from "@/utils/date";
 
 export interface TransactionFormData {
   item: string;
@@ -19,7 +19,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
 }) => {
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
-  const [date, setDate] = useState(formatTodayDate());
+  const [date, setDate] = useState(getToday());
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
     // フォームをリセット
     setItem("");
     setAmount("");
-    setDate(formatTodayDate());
+    setDate(getToday());
   };
   return (
     <VStack maxW="4xl" width="full" gap={4} as="form" onSubmit={handleSubmit}>

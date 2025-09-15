@@ -8,12 +8,3 @@ export const formatDate = (dateString: string): string => {
 export const formatAmount = (amount: number): string => {
   return amount.toLocaleString() + "円";
 };
-
-// 今日の日付をYYYY-MM-DD形式で取得
-export const formatTodayDate = (): string => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};

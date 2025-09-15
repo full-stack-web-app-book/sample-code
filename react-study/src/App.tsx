@@ -8,7 +8,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa";
-import { RecentIncomeTransactionList } from "./components/TransactionList";
+import {
+  RecentExpenseTransactionList,
+  RecentIncomeTransactionList,
+} from "./components/TransactionList";
 
 function App() {
   return (
@@ -34,6 +37,9 @@ function App() {
         </Flex>
         <SummaryCard title="収入履歴">
           <RecentIncomeTransactionList maxTransactions={3} />
+        </SummaryCard>
+        <SummaryCard title="支出履歴">
+          <RecentExpenseTransactionList maxTransactions={3} />
         </SummaryCard>
       </Container>
     </>

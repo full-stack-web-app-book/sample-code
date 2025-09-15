@@ -25,6 +25,23 @@ export const RecentIncomeTransactionList: React.FC<{
   return <TransactionList transactions={recentTransactions} />;
 };
 
+export const RecentExpenseTransactionList: React.FC<{
+  maxTransactions: number;
+}> = ({ maxTransactions }) => {
+  const sampleTransactions: Transaction[] = [
+    { id: 6, item: "外食", amount: -2500, date: "2025-09-27" },
+    { id: 5, item: "交通費", amount: -1200, date: "2025-09-26" },
+    { id: 4, item: "娯楽", amount: -4000, date: "2025-09-22" },
+    { id: 3, item: "日用品", amount: -3000, date: "2025-09-18" },
+    { id: 2, item: "光熱費", amount: -8000, date: "2025-09-12" },
+    { id: 1, item: "家賃", amount: -60000, date: "2025-09-01" },
+  ];
+
+  const recentTransactions = sampleTransactions.slice(0, maxTransactions);
+
+  return <TransactionList transactions={recentTransactions} />;
+};
+
 const TransactionList: React.FC<{ transactions: Transaction[] }> = ({
   transactions,
 }) => {
@@ -48,7 +65,10 @@ const TransactionListItem: React.FC<{ transaction: Transaction }> = ({
           {formatDate(transaction.date)}
         </Text>
       </Box>
-      <Text color="green.500" fontWeight="bold">
+      <Text
+        color={transaction.amount > 0 ? "green.500" : "red.500"}
+        fontWeight="bold"
+      >
         {transaction.amount.toLocaleString()}円
       </Text>
     </Flex>

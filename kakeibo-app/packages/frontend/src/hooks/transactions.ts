@@ -1,4 +1,4 @@
-import type { Transaction } from "@/utils/transactionUtils";
+import type { Transaction } from "@/utils/transaction";
 
 export interface TransactionList {
   transactions: Transaction[];

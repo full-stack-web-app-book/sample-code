@@ -3,7 +3,7 @@ import {
   type Transaction,
   formatDate,
   formatAmount,
-} from "../utils/transactionUtils";
+} from "../utils/transaction";
 import {
   Box,
   Flex,

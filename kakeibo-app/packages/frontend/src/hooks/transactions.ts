@@ -1,13 +1,18 @@
-import type { Transaction } from "@/utils/transactionUtils";
+export type Transaction = {
+  id: number;
+  item: string;
+  amount: number;
+  date: string;
+};
 
-export interface TransactionList {
+export type TransactionListInfo = {
   transactions: Transaction[];
   totalCount: number;
   totalAmount: number;
-}
+};
 
 export type TransactionsHooks = {
-  transactionList: TransactionList | undefined;
+  transactionList: TransactionListInfo | undefined;
   isLoading: boolean;
   error: Error | null;
   refetch: () => void;

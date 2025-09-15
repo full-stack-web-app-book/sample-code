@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  type Transaction,
-  formatDate,
-  formatAmount,
-} from "../utils/transactionUtils";
+import { formatDate, formatAmount } from "@/utils/formatter";
 import {
   Box,
   Flex,
@@ -12,6 +8,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import type { Transaction } from "@/hooks/transactions";
 
 interface TransactionListProps {
   transactions?: Transaction[];

@@ -1,5 +1,5 @@
 import React from "react";
-import { formatAmount } from "../utils/transaction";
+import { formatAmount } from "../utils/formatter";
 import {
   Box,
   Heading,

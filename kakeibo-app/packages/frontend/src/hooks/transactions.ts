@@ -1,4 +1,9 @@
-import type { Transaction } from "@/utils/transaction";
+export type Transaction = {
+  id: number;
+  item: string;
+  amount: number;
+  date: string;
+};
 
 export interface TransactionList {
   transactions: Transaction[];

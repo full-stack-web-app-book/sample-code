@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Transaction } from "../utils/transaction";
+import type { Transaction } from "./transactions";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

@@ -1,6 +1,6 @@
 import React, { useState, type FormEvent } from "react";
 import { VStack, Input, Button, Field, HStack } from "@chakra-ui/react";
-import { formatTodayDate } from "@/utils/transaction";
+import { formatTodayDate } from "@/utils/formatter";
 
 export interface TransactionFormData {
   item: string;

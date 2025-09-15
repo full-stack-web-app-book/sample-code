@@ -1,10 +1,3 @@
-export interface Transaction {
-  id: number;
-  item: string;
-  amount: number;
-  date: string;
-}
-
 // 日付をフォーマット（YYYY-MM-DD → YYYY年MM月DD日）
 export const formatDate = (dateString: string): string => {
   const parts = dateString.split("-");

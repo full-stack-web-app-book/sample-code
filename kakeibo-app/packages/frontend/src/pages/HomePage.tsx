@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import BalanceSummary from "@/components/BalanceSummary";
-import { Container, Flex, Grid, GridItem, Stack } from "@chakra-ui/react";
+import { Container, Flex, Grid, GridItem } from "@chakra-ui/react";
 import InputButton from "@/components/InputButton";
 import Header from "@/components/Header";
 import {

@@ -13,8 +13,10 @@ import {
   RecentIncomeTransactionList,
 } from "../components/TransactionList";
 import { Header } from "@/components/Header";
+import { useNavigate } from "react-router";
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <>
       <Header />
@@ -22,7 +24,11 @@ function Home() {
         <Grid templateColumns="repeat(2, 1fr)" gap={6}>
           <GridItem colSpan={2}>
             <Flex justifyContent="flex-end">
-              <Button colorPalette="teal" fontWeight="bold">
+              <Button
+                colorPalette="teal"
+                fontWeight="bold"
+                onClick={() => navigate("/input")}
+              >
                 <FaPlus />
                 登録
               </Button>

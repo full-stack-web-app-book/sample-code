@@ -11,7 +11,7 @@ type Transaction = {
 export const RecentIncomeTransactionList: React.FC<{
   maxTransactions: number;
 }> = ({ maxTransactions }) => {
-  const sampleTransactions: Transaction[] = [
+  const transactionList: Transaction[] = [
     { id: 6, item: "ギフト", amount: 3000, date: "2025-09-28" },
     { id: 5, item: "ボーナス", amount: 150000, date: "2025-09-25" },
     { id: 4, item: "その他収入", amount: 10000, date: "2025-09-20" },
@@ -20,7 +20,7 @@ export const RecentIncomeTransactionList: React.FC<{
     { id: 1, item: "給料", amount: 300000, date: "2025-09-01" },
   ];
 
-  const recentTransactions = sampleTransactions.slice(0, maxTransactions);
+  const recentTransactions = transactionList.slice(0, maxTransactions);
 
   return <TransactionList transactions={recentTransactions} />;
 };
@@ -28,7 +28,7 @@ export const RecentIncomeTransactionList: React.FC<{
 export const RecentExpenseTransactionList: React.FC<{
   maxTransactions: number;
 }> = ({ maxTransactions }) => {
-  const sampleTransactions: Transaction[] = [
+  const transactionList: Transaction[] = [
     { id: 6, item: "外食", amount: -2500, date: "2025-09-27" },
     { id: 5, item: "交通費", amount: -1200, date: "2025-09-26" },
     { id: 4, item: "娯楽", amount: -4000, date: "2025-09-22" },
@@ -37,7 +37,7 @@ export const RecentExpenseTransactionList: React.FC<{
     { id: 1, item: "家賃", amount: -60000, date: "2025-09-01" },
   ];
 
-  const recentTransactions = sampleTransactions.slice(0, maxTransactions);
+  const recentTransactions = transactionList.slice(0, maxTransactions);
 
   return <TransactionList transactions={recentTransactions} />;
 };

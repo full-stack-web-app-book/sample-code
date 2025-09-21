@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 
-function Input() {
+function InputPage() {
   return (
     <>
       <Header />
@@ -8,4 +8,4 @@ function Input() {
   );
 }
 
-export default Input;
+export default InputPage;

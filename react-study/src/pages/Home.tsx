@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Card,
   Container,
@@ -7,29 +6,18 @@ import {
   Grid,
   GridItem,
   Heading,
-  Text,
 } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa";
 import {
   RecentExpenseTransactionList,
   RecentIncomeTransactionList,
 } from "../components/TransactionList";
+import { Header } from "@/components/Header";
 
 function Home() {
   return (
     <>
-      <Box
-        as="header"
-        bg="teal.500"
-        color="white"
-        py={4}
-        textAlign="center"
-        boxShadow="md"
-      >
-        <Text fontSize="xl" fontWeight="bold">
-          シンプル家計簿
-        </Text>
-      </Box>
+      <Header />
       <Container as="main" maxW="4xl" py={6}>
         <Grid templateColumns="repeat(2, 1fr)" gap={6}>
           <GridItem colSpan={2}>

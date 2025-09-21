@@ -1,5 +1,11 @@
+import { Header } from "@/components/Header";
+
 function Input() {
-  return <>入力ページ</>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 }
 
 export default Input;

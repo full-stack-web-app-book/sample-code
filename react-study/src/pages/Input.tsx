@@ -86,6 +86,7 @@ function InputPage() {
               <Input
                 placeholder="項目を入力してください"
                 value={item}
+                maxLength={20}
                 onChange={(e) => setItem(e.target.value)}
               />
             </Field.Root>

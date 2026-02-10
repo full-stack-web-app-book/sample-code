@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>家計簿アプリ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>家計簿アプリ</h1>
+
+    <div class="container">
+        <div class="input-section">
+            <h2>登録</h2>
+            <form>
+                <label for="date">日付:</label>
+                <input type="date" id="date" name="date"><br><br>
+
+                <label for="type">種類:</label>
+                <select id="type" name="type">
+                    <option value="income">収入</option>
+                    <option value="expense">支出</option>
+                </select><br><br>
+
+                <label for="item">品目:</label>
+                <input type="text" id="item" name="item"><br><br>
+
+                <label for="amount">金額:</label>
+                <input type="number" id="amount" name="amount"><br><br>
+
+                <button type="submit">登録</button>
+            </form>
+        </div>
+
+        <div class="display-section">
+            <h2>一覧</h2>
+            <ul>
+                <li>2026-01-01 支出 食費 1000円</li>
+                <li>2026-01-02 収入 給与 50000円</li>
+                <li>2026-01-03 支出 交通費 500円</li>
+            </ul>
+
+            <p>合計金額: 49500円</p>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

@@ -12,7 +12,7 @@ import {
   RecentExpenseTransactionList,
   RecentIncomeTransactionList,
 } from "../components/TransactionList";
-import { Header } from "@/components/Header";
+import { Header } from "../components/Header";
 import { useNavigate } from "react-router";
 
 function Home() {

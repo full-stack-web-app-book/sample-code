@@ -5,11 +5,12 @@ import { Client } from "pg";
 
 // PostgreSQLクライアントの初期化
 const client = new Client({
-  host: "localhost",
-  port: 5432,
-  database: "kakeibo_db",
-  user: "postgres",
-  password: "接続に用いるパスワード",
+  host: env.DATABASE_HOST,
+  port: env.DATABASE_PORT,
+  database: env.DATABASE_NAME,
+  user: env.DATABASE_USER,
+  password: env.DATABASE_PASSWORD,
+  ssl: { rejectUnauthorized: false }
 });
 
 // データベース接続

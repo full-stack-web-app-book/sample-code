@@ -10,7 +10,7 @@ const client = new Client({
   port: 5432,
   database: "kakeibo_db",
   user: "postgres",
-  password: "接続に用いるパスワード",
+  password: "test",
 });
 
 // データベース接続
@@ -27,6 +27,14 @@ app.use(
     credentials: true,
   }),
 );
+
+// 日付をYYYY-MM-DD形式に変換する関数
+const toYMD = (d: Date) => {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 
 // GET /transactions - 取引履歴一覧の取得
 app.get("/transactions", async (c) => {
@@ -68,7 +76,7 @@ app.get("/transactions", async (c) => {
     id: parseInt(row.id),
     item: row.item,
     amount: parseFloat(row.amount), // 実際の値（正負含む）を返す
-    date: new Date(row.date).toISOString().split("T")[0],
+    date: toYMD(new Date(row.date)),
   }));
 
   // 合計金額を計算
@@ -118,7 +126,7 @@ app.post("/transactions", async (c) => {
     id: parseInt(result.rows[0].id),
     item: result.rows[0].item,
     amount: parseFloat(result.rows[0].amount),
-    date: result.rows[0].date
+    date: toYMD(new Date(result.rows[0].date))
   }
 
   return c.json(newTransaction, 201); // ステータスコード201で返却

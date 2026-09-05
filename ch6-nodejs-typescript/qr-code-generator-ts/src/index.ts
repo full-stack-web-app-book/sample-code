@@ -1,23 +1,23 @@
 import qrcode from "qrcode-terminal";
 
 // URL形式の簡単な検証関数
-function isValidUrl(str: string): boolean {
+const isValidUrl = (str: string): boolean => {
   try {
     new URL(str);
     return true;
   } catch (_) {
     return false;
   }
-}
+};
 
 // qrcode-terminal の generate 関数のコールバック関数
-function callback(qrcode: string): void {
+const callback = (qrcode: string): void => {
   console.log(qrcode); // QRコードを出力
   console.log("");
   console.log("QRコードが生成されました！");
-}
+};
 
-function main(): void {
+const main = (): void => {
   // 第一引数からURLを取得
   const url = process.argv[2];
 
@@ -40,8 +40,8 @@ function main(): void {
   console.log(`QRコードを生成中: ${url}`);
   console.log("");
   // ライブラリを使用してQRコードを生成
-  // generate 関数は非同期で、生成が完了したらコールバック関数が呼ばれる
+  // generate 関数の処理が完了すると、コールバック関数が呼ばれる
   qrcode.generate(url, { small: true }, callback);
-}
+};
 
 main();

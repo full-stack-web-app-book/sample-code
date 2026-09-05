@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import Home from "./pages/Home";
-import InputPage from "./pages/Input";
+import Home from "@/pages/Home";
+import InputPage from "@/pages/Input";
 
 function App() {
   return (

@@ -3,15 +3,15 @@ import {
   Card,
   Container,
   Flex,
-  Heading,
   Grid,
   GridItem,
+  Heading,
 } from "@chakra-ui/react";
+import { FaPlus } from "react-icons/fa";
 import {
   RecentExpenseTransactionList,
   RecentIncomeTransactionList,
 } from "@/components/TransactionList";
-import { FaPlus } from "react-icons/fa";
 import { Header } from "@/components/Header";
 import { useNavigate } from "react-router";
 

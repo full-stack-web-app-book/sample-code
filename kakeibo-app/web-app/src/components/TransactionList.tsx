@@ -9,12 +9,48 @@ import {
   Text,
 } from "@chakra-ui/react";
 import type { Transaction } from "@/hooks/transactions";
+import { useIncomeTransactions } from "@/hooks/useIncomeTransactions";
+import { useExpenseTransactions } from "@/hooks/useExpenseTransactions";
 
 interface TransactionListProps {
   transactions?: Transaction[];
   isLoading?: boolean;
   error?: Error | null;
 }
+
+export const RecentIncomeTransactionList: React.FC<{
+  maxTransactions: number;
+}> = ({ maxTransactions }) => {
+  const { transactionList, isLoading, error } = useIncomeTransactions();
+
+  const transactions =
+    transactionList?.transactions?.slice(0, maxTransactions) || [];
+
+  return (
+    <TransactionList
+      transactions={transactions}
+      isLoading={isLoading}
+      error={error}
+    />
+  );
+};
+
+export const RecentExpenseTransactionList: React.FC<{
+  maxTransactions: number;
+}> = ({ maxTransactions }) => {
+  const { transactionList, isLoading, error } = useExpenseTransactions();
+
+  const transactions =
+    transactionList?.transactions?.slice(0, maxTransactions) || [];
+
+  return (
+    <TransactionList
+      transactions={transactions}
+      isLoading={isLoading}
+      error={error}
+    />
+  );
+};
 
 const TransactionList: React.FC<TransactionListProps> = ({
   transactions,
@@ -58,5 +94,3 @@ const TransactionListItem: React.FC<{ transaction: Transaction }> = ({
     </Flex>
   );
 };
-
-export default TransactionList;

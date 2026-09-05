@@ -7,9 +7,10 @@
   "description": "",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "web-app",
+    "backend"
   ],
   "devDependencies": {
-    "vite": "^6.3.5"
+    "vite": "^7.3.6"
   }
 }

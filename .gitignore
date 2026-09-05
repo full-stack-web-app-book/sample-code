@@ -46,3 +46,6 @@ coverage/
 .idea/usage.statistics.xml
 .idea/shelf
 .playwright-mcp
+
+# 書籍の校正PDF
+final-pdf/

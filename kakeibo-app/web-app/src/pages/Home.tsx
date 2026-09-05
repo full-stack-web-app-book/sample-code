@@ -1,16 +1,15 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import BalanceSummary from "@/components/BalanceSummary";
 import { Container, Flex, Grid, GridItem } from "@chakra-ui/react";
 import InputButton from "@/components/InputButton";
-import Header from "@/components/Header";
+import { Header } from "@/components/Header";
 import {
   RecentExpenseTransactionList,
   RecentIncomeTransactionList,
-} from "@/components/RecentTransactionList";
+} from "@/components/TransactionList";
 import SummaryCard from "@/components/SummaryCard";
 
-const HomePage: React.FC = () => {
+function Home() {
   const navigate = useNavigate();
   const maxTransactions = 5;
   return (
@@ -42,6 +41,6 @@ const HomePage: React.FC = () => {
       </Container>
     </>
   );
-};
+}
 
-export default HomePage;
+export default Home;

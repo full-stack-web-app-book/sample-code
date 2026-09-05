@@ -2,7 +2,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { Client } from "pg";
-import { env } from "../env.ts";
+import { env } from "./env.js";
 
 // PostgreSQLクライアントの初期化
 const client = new Client({

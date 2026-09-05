@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Center, Container, Tabs, Text } from "@chakra-ui/react";
 import { useAddTransactions } from "@/hooks/useAddTransactions";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import {
   TransactionForm,
   type TransactionFormData,
 } from "@/components/TransactionForm";
-import Header from "@/components/Header";
+import { Header } from "@/components/Header";
 
-const InputPage: React.FC = () => {
+function InputPage() {
   const { addTransaction, createTransactionData } = useAddTransactions();
   const [type, setType] = useState<"income" | "expense">("expense");
 
@@ -91,6 +91,6 @@ const InputPage: React.FC = () => {
       </Container>
     </>
   );
-};
+}
 
 export default InputPage;

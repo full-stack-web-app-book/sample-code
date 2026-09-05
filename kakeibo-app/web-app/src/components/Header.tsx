@@ -1,7 +1,6 @@
-import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   return (
     <Box
       as="header"
@@ -17,5 +16,3 @@ const Header: React.FC = () => {
     </Box>
   );
 };
-
-export default Header;

@@ -26,18 +26,26 @@ npm run dev
 src
 ├── App.tsx
 ├── components # React コンポーネント
-│   ├── BalanceSummary.tsx
-│   ├── TransactionForm.tsx
-│   └── TransactionList.tsx
+│   ├── BalanceSummary.tsx
+│   ├── Header.tsx
+│   ├── InputButton.tsx
+│   ├── SummaryCard.tsx
+│   ├── TransactionForm.tsx
+│   ├── TransactionList.tsx
+│   └── ui # Chakra UI CLI が生成するスニペット
 ├── hooks # カスタムフック
-│   ├── useFinancialSummary.ts
-│   └── useTransactions.ts
+│   ├── transactions.ts
+│   ├── useAddTransactions.ts
+│   ├── useExpenseTransactions.ts
+│   ├── useFinancialSummary.ts
+│   └── useIncomeTransactions.ts
 ├── main.tsx
 ├── pages # ページごとのルートコンポーネント
-│   ├── HomePage.tsx
-│   └── InputPage.tsx
+│   ├── Home.tsx
+│   └── Input.tsx
 ├── styles # CSS ファイル
-│   └── global.css
+│   └── global.css
 └── utils # その他
-    └── transactionUtils.ts
+    ├── date.ts
+    └── formatter.ts
 ```

@@ -1,6 +1,6 @@
-function add(a: number, b: number): number {
+const add = (a: number, b: number): number => {
   return a + b;
-}
+};
 
 const num1: number = 10;
 const num2 = 3;

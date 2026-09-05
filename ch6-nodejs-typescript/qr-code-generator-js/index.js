@@ -41,7 +41,7 @@ const main = () => {
   console.log(`QRコードを生成中: ${url}`);
   console.log(""); // 空行を入れる
   // ライブラリを使用してQRコードを生成
-  // generate 関数は非同期で、生成が完了したらコールバック関数が呼ばれる
+  // generate関数は、生成したQRコードを引数にコールバック関数を呼び出す
   qrcode.generate(url, { small: true }, callback);
 };
 

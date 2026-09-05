@@ -1,5 +1,5 @@
 // ファイル読み込みをシミュレートする関数（実行時間3秒）
-function readFileMock() {
+const readFileMock = () => {
   return new Promise((resolve) => {
     // 処理の実行を開始
     console.log("【ファイル読み込み】ファイル読み込みを開始...");
@@ -11,10 +11,10 @@ function readFileMock() {
       resolve(result);
     }, 3000); // 3000ms
   });
-}
+};
 
 // メイン関数
-async function main() {
+const main = async () => {
   // 長時間(3秒間)の処理を実行
   const readFileResult = readFileMock();
 
@@ -32,7 +32,7 @@ async function main() {
   const result = await readFileResult;
   console.log("ファイル読み込みの結果");
   console.log(result);
-}
+};
 
 // 実行
 main().catch(console.error);
